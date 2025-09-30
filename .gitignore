@@ -6,6 +6,11 @@ bin-release/
 
 # Other files and folders
 .settings/
+.idea/
+.vscode/
+
+# Archives and other large binary assets
+*.zip
 
 # Executables
 *.swf

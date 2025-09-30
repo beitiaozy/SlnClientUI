@@ -32,11 +32,6 @@ export function withdrawList(data) {
 export function rankList(data) {
   return request.post("seller/rankList",data);
 }
-// Hidden
-export function ceshi(data) {
-  return request.post("net4G/ceshi",data);
-}
-
 // 轮播图 -- 单双图
 export function imgList(data) {
   return request.post("banner/imgList",data);

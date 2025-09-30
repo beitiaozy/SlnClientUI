@@ -1,5 +1,24 @@
 import {baseUrl} from '../config'
 
+function promptReLogin() {
+    try {
+        const pages = getCurrentPages();
+        if (!pages || !pages.length) return;
+
+        const currentPage = pages[pages.length - 1];
+        if (currentPage && currentPage.setData && currentPage.data) {
+            if (currentPage.data.iShidden !== undefined) {
+                currentPage.setData({ iShidden: false });
+            }
+            if (typeof currentPage.showLoginPopup === 'function') {
+                currentPage.showLoginPopup();
+            }
+        }
+    } catch (error) {
+        console.warn('promptReLogin failed', error);
+    }
+}
+
 export default function request(api, method, data = {},) {
     // 配置请求根路径
     let reqData = prepareRequestData({key: "value"});
@@ -43,6 +62,12 @@ export default function request(api, method, data = {},) {
                             wx.removeStorageSync('userInfo')
                             // wx.clearStorageSync()
                         }
+                        wx.showToast({
+                            title: '登录已过期，请重新登录',
+                            icon: 'none'
+                        });
+                        wx.setStorageSync('toLogin', true);
+                        promptReLogin();
                     }
                     if (res.data.data == '代理商需要登录！' || res.data.data == '账号异常！') {
                         wx.removeStorageSync('agent-id')
