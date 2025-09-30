@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "录入设备",
+  "usingComponents": {
+    "navbar": "/components/navbar/index"
+  }
+}

@@ -1,0 +1,75 @@
+/**
+ * app.wxss*
+ *
+ * @format
+ */
+
+@import "/font/iconfont.wxss";
+@import "/font/font.wxss";
+
+page {
+	background: #f5f5f5;
+}
+
+button[plain] {
+	border: 0;
+}
+
+.app_bg {
+	background: #1745cd;
+}
+
+.app_bg_title {
+	background: gray;
+	color: #fff;
+}
+
+.app_cz_title {
+	background: rgb(27, 184, 232);
+}
+
+.app_btn {
+	white-space: nowrap;
+	background: #1745cd;
+	color: #fff;
+	width: 100%;
+	margin: 0;
+	font-size: 30rpx;
+}
+
+.app_btn_a::after {
+	border: none;
+}
+
+.btn_kefu {
+	font-size: 30rpx;
+	background-color: #fff;
+	margin: 0;
+	padding: 0;
+	height: 32rpx;
+	line-height: 32rpx;
+}
+
+.btn_red {
+	margin: 0;
+	color: #fff;
+	background-color: #fe5722;
+	font-size: 30rpx;
+}
+
+.app_active_tab {
+	font-weight: 550;
+	border-bottom: 6rpx solid crimson;
+}
+
+.app_ios {
+	padding-bottom: constant(safe-area-inset-bottom);
+	/*  ///兼容 IOS<11.2/ */
+	padding-bottom: env(safe-area-inset-bottom);
+	/* ///兼容 IOS>11.2/ */
+}
+
+.app_ios_bottom {
+	bottom: constant(safe-area-inset-bottom);
+	bottom: env(safe-area-inset-bottom);
+}

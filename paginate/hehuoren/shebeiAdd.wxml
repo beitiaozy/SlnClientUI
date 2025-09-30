@@ -1,0 +1,119 @@
+<view class="box" wx:if="{{type == '1'}}">
+  <form action="" bindsubmit="addSubmit">
+    <view class="row">
+      <view class="row_fl">
+        <text style="color:red;">*</text>设备号
+      </view>
+      <view class="row_fr">
+        <input type="text" disabled value="{{info.dev_id}}" placeholder="请输入号" />
+      </view>
+    </view>
+    <view class="row">
+      <view class="row_fl">
+        <text style="color:red;">*</text>设备名称
+      </view>
+      <view class="row_fr">
+        <input type="text" value="{{info.name}}" disabled placeholder="请输入设备名称" />
+      </view>
+    </view>
+    <view class="row">
+      <view class="row_fl">
+        <text style="color:red;">*</text>设备状态
+      </view>
+      <view class="row_fr">
+        <input type="text" disabled value="{{info.status}}" placeholder="无需输入，自动填充" />
+      </view>
+    </view>
+
+    <view class="row">
+      <view class="row_fl">
+        <text style="color:red;">*</text>选择场所
+      </view>
+      <view class="row_fr flex_sw">
+        <input type="text" disabled value="{{info.address}}" bindtap="select_changsuo" placeholder="请选择场所" />
+        <view class="iconfont icon-zhiyuandidian5"></view>
+      </view>
+    </view>
+    <view class="row">
+      <view class="row_fl">
+        <text style="color:red;">*</text>货道数量
+      </view>
+      <view class="row_fr">
+        <input type="number" name="amount" placeholder="请输入货到数量" />
+      </view>
+    </view>
+    <button class="btn_lan btn" form-type="submit">提交</button>
+  </form>
+</view>
+<view class="box" wx:if="{{type == '2'}}">
+  <form action="" bindsubmit="addSubmit">
+    <view class="row">
+      <view class="row_fl">
+        <text style="color:red;">*</text>设备号
+      </view>
+      <view class="row_fr">
+        <input type="text" disabled value="{{info.dev_id}}" placeholder="请输入号" />
+      </view>
+    </view>
+    <view class="row">
+      <view class="row_fl">
+        <text style="color:red;">*</text>设备名称
+      </view>
+      <view class="row_fr">
+        <input type="text" value="{{info.name}}" disabled placeholder="请输入设备名称" />
+      </view>
+    </view>
+    <view class="row">
+      <view class="row_fl">
+        <text style="color:red;">*</text>设备状态
+      </view>
+      <view class="row_fr">
+        <input type="text" disabled value="{{info.status}}" placeholder="无需输入，自动填充" />
+      </view>
+    </view>
+
+    <view class="row">
+      <view class="row_fl">
+        <text style="color:red;">*</text>选择场所
+      </view>
+      <view class="row_fr flex_sw">
+        <input type="text" disabled value="{{info.address}}" bindtap="select_changsuo" placeholder="请选择场所" />
+        <view class="iconfont icon-zhiyuandidian5"></view>
+      </view>
+    </view>
+    <!-- <view class="row">
+      <view class="row_fl">
+        <text style="color:red;">*</text>货道数量
+      </view>
+      <view class="row_fr">
+        <input type="number" name="amount" placeholder="请输入货到数量" />
+      </view>
+    </view> -->
+    <button class="btn_lan btn" form-type="submit">提交</button>
+  </form>
+</view>
+
+<!-- 修改 遮罩层 -->
+<view wx:if="{{isSelect}}" class="add_zzc {{isSelect ? 'add_zzc2' : ''}}" bindtap="select_close"></view>
+<view wx:if="{{true}}" class="add_info {{isSelect ? 'add_info2' : 'add_info'}}">
+  <view class="add_top">
+    <view>选择场所</view>
+    <view bindtap="select_close"><text class="iconfont icon-quxiao"></text></view>
+  </view>
+  <scroll-view scroll-y style="height: calc(90vh - 64rpx); padding: 30rpx 50rpx; box-sizing: border-box; font-size: 30rpx;">
+    <!-- <radio-group bindchange="radioChange"> -->
+      <view  wx:for="{{list}}" wx:key="index">
+        <label for="" style="display: flex; border-bottom: 1rpx solid #cccccc; margin-bottom: 30rpx; justify-content: space-between; padding: 0 50rpx 0 0;" bindtap="changeRadio"  data-item="{{item}}">
+          <view>
+            <view style="margin: 30rpx 0 20rpx 0;">{{item.addr_name}}</view>
+            <view>{{item.addr_location}}</view>
+          </view>
+          <view style="display: flex; align-items: center;">
+            <radio value="{{item.id}}" checked="{{item.id == info.address_id}}"  />
+          </view>
+        </label>
+      </view>
+    <!-- </radio-group> -->
+  </scroll-view>
+
+</view>

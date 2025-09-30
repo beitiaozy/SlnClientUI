@@ -1,0 +1,72 @@
+{
+	"pages": [
+		"pages/main/main",
+		"pages/index/index",
+		"pages/user/user"
+	],
+	"window": {
+		"backgroundTextStyle": "light",
+		"navigationBarBackgroundColor": "#fff",
+		"navigationBarTitleText": "Weixin",
+		"navigationBarTextStyle": "black",
+		"navigationStyle": "custom"
+	},
+	"tabBar": {
+		"color": "#3C464B",
+		"selectedColor": "#0D34A5",
+		"borderStyle": "black",
+		"backgroundColor": "#ffffff",
+		"list": [
+			{
+				"pagePath": "pages/main/main",
+				"text": "首页",
+				"iconPath": "images/icon-shouye@2x.png",
+				"selectedIconPath": "images/icon-shouye-blue@2x.png"
+			},
+			{
+				"pagePath": "pages/user/user",
+				"text": "我的",
+				"iconPath": "images/icon_geren@2x.png",
+				"selectedIconPath": "images/icon_geren-blue@2x.png"
+			}
+		],
+		"position": "bottom"
+	},
+	"subPackages": [
+		{
+			"root": "paginate/",
+			"pages": [
+				"order_list/index",
+				"invest/invest",
+				"recharge_record/recharge_record",
+				"rich_text/rich_text",
+				"hehuoren/hehuoren",
+				"hehuoren/changsuo_admin",
+				"hehuoren/shebei_admin",
+				"hehuoren/members/member",
+				"hehuoren/m_order/order",
+				"hehuoren/m_recharge/recharge",
+				"hehuoren/shebeiAdd",
+				"submitInfo/changsuo_list",
+				"submitInfo/submitInfo",
+				"add_shebi/add_shebei",
+				"shezhi/login",
+				"cash/cash",
+				"editPwd/editPwd",
+				"huodong/huodong",
+				"setUserInfo/setUserInfo",
+				"agreement/agreement",
+				"youhuiquan/youhuiquan",
+				"payment/payment",
+				"upload_receipt/upload_receipt"
+			]
+		}
+	],
+	"requiredPrivateInfos": ["chooseLocation", "getLocation"],
+	"permission": {
+		"scope.userLocation": {
+			"desc": "你的位置信息将用于小程序位置接口的效果展示"
+		}
+	},
+	"sitemapLocation": "sitemap.json"
+}

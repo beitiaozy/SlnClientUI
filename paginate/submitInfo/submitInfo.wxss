@@ -1,0 +1,69 @@
+/**
+ * paginate/submitInfo/submitInfo.wxss
+ *
+ * @format
+ */
+
+.box {
+  font-size: 30rpx;
+  padding: 30rpx;
+}
+.row {
+  display: flex;
+  align-items: center;
+  border-bottom: 2rpx solid #ddd;
+  padding: 10rpx 0 16rpx 0;
+  margin: 0 0 16rpx 0;
+}
+.row_fl {
+  margin: 0 30rpx 0 0;
+  width: 240rpx;
+}
+.row_fr {
+  flex: 1;
+}
+.row_fr input {
+  width: 100%;
+}
+.flex_sw {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.icon-youjiantou {
+  font-size: 28rpx !important;
+  color: #808080;
+}
+.icon-zhiyuandidian5 {
+  color: #56b5e3;
+}
+.v-blue {
+  color: #fff;
+  background-color: #56b5e3;
+  padding: 8rpx;
+  border-radius: 6rpx;
+  font-size: 24rpx;
+}
+.v-green {
+  background-color: #07c15e !important;
+}
+.btn {
+  font-size: 30rpx;
+  margin: 30rpx 0 0 !important;
+  padding: 16rpx;
+}
+
+.del_image {
+  color: white;
+  display: flex;
+  opacity: 1;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  z-index: 100;
+  top: 0;
+  left: 0;
+  background: rgba(0, 0, 0, 0.6);
+}

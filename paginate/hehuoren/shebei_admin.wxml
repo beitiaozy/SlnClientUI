@@ -1,0 +1,126 @@
+<navbar parameter="{{ parameter }}"></navbar>
+<view class="container">
+	<!-- 列表区域 -->
+	<view class="main">
+		<block wx:for="{{ list }}" wx:key="index">
+			<view class="device-card">
+				<view class="device-info">
+					<view class="info-item">
+						<text class="label">设备名称：</text>
+						<text class="value">{{ item.name }}</text>
+					</view>
+					<view class="info-item">
+						<text class="label">设备号：</text>
+						<text class="value highlight">{{ item.only_code }}</text>
+					</view>
+					<view class="info-item">
+						<text class="label">代理等级：</text>
+						<text class="value">{{ item.daili_rate }}</text>
+					</view>
+					<view class="info-item">
+						<text class="label">联系人：</text>
+						<text class="value">{{ item.username }}</text>
+					</view>
+					<view class="info-item">
+						<text class="label">联系电话：</text>
+						<text class="value">{{ item.mobile }}</text>
+					</view>
+					<view class="info-item">
+						<text class="label">状态：</text>
+						<text class="value">{{ item.status }}</text>
+					</view>
+				</view>
+				<view class="device-actions">
+					<button class="app_btn" bindtap="edit" data-item="{{ item }}">编辑</button>
+				</view>
+			</view>
+		</block>
+		<!-- 空数据提示 -->
+		<view wx:if="{{ list.length == 0 }}" class="empty">
+			<view class="iconfont icon-wushuju"></view>
+			<text>暂无设备信息</text>
+		</view>
+	</view>
+
+	<!-- 原有 goPages 改为 addDevice -->
+	<view class="fab" catchtap="addDevice">
+		<text class="iconfont icon-jiahao"></text>
+	</view>
+
+
+	<!-- 编辑弹窗 -->
+	<view wx:if="{{ isEdit }}" class="modal-mask" bindtap="edit_close"></view>
+	<view wx:if="{{ isEdit }}" class="modal">
+		<view class="modal-header">
+			<text>编辑设备</text>
+			<text class="iconfont icon-quxiao" bindtap="edit_close"></text>
+		</view>
+		<view class="modal-body">
+			<form bindsubmit="sure">
+				<view class="form-item">
+					<text class="label required">设备号</text>
+					<input type="text" name="only_code" disabled value="{{ editValue.only_code }}" />
+				</view>
+				<view class="form-item">
+					<text class="label required">设备名称</text>
+					<input type="text" name="name" placeholder="请输入设备名称" value="{{ editValue.name }}" bindinput="changeInput" data-type="name" />
+				</view>
+				<view class="form-item">
+					<text class="label">音响SN</text>
+					<input type="text" name="video_id" placeholder="请输入音响SN" value="{{ editValue.video_id }}" bindinput="changeInput" data-type="video_id" />
+				</view>
+				<view class="form-item">
+					<text class="label">音响版本号</text>
+					<input type="text" name="video_version" placeholder="请输入音响版本号" value="{{ editValue.video_version }}" bindinput="changeInput" data-type="video_version" />
+				</view>
+				<view class="form-item">
+					<text class="label required">基础时间(分钟)</text>
+					<input type="number" name="base_time_x" placeholder="请输入基础时间" value="{{ editValue.base_time_x }}" bindinput="changeInput" data-type="base_time_x" />
+				</view>
+				<view class="form-item">
+					<text class="label required">基础价格(元)</text>
+					<input type="number" name="price_y" placeholder="请输入基础价格" value="{{ editValue.price_y }}" bindinput="changeInput" data-type="price_y" />
+				</view>
+				<view class="form-item">
+					<text class="label required">超时价格(元)</text>
+					<input type="number" name="price_z" placeholder="请输入超时价格" value="{{ editValue.price_z }}" bindinput="changeInput" data-type="price_z" />
+				</view>
+				<view class="form-item">
+					<text class="label required">泡沫每秒价格(元)</text>
+					<input type="number" name="prize_pm" placeholder="请输入泡沫每秒价格" value="{{ editValue.prize_pm }}" bindinput="changeInput" data-type="prize_pm" />
+				</view>
+				<view class="form-item">
+					<text class="label required">水流每秒价格(元)</text>
+					<input type="number" name="prize_sl" placeholder="请输入水流每秒价格" value="{{ editValue.prize_sl }}" bindinput="changeInput" data-type="prize_sl" />
+				</view>
+
+				<view class="tips">提示: {{ params.base_time_x || 10 }}分钟{{ params.price_y || 20 }}元，超过{{ params.base_time_x || 10 }}分钟后{{ params.price_z || 3 }}元/分钟</view>
+				<view class="modal-footer">
+					<button form-type="submit" class="app_btn">确认保存</button>
+				</view>
+			</form>
+		</view>
+	</view>
+
+	<!-- 场所选择弹窗 -->
+	<page-container show="{{ isSelect }}">
+		<view class="modal">
+			<view class="modal-header">
+				<text>选择场所</text>
+				<text class="iconfont icon-quxiao" bindtap="select_close"></text>
+			</view>
+			<scroll-view scroll-y style="max-height: 70vh;">
+				<block wx:for="{{ list_cs }}" wx:key="index">
+					<label class="select-item" bindtap="changeRadio" data-item="{{ item }}">
+						<view>
+							<view class="name">{{ item.addr_name }}</view>
+							<view class="location">{{ item.addr_location }}</view>
+						</view>
+						<radio value="{{ item.id }}" checked="{{ item.id == info.address_id }}" />
+					</label>
+				</block>
+			</scroll-view>
+		</view>
+	</page-container>
+
+</view>

@@ -1,0 +1,9 @@
+<view class="navbar {{ parameter.class }}" style="height:{{ navH }}rpx">
+	<view class="navbarH" style="height:{{ navH }}rpx;">
+		<view class="navbarCon acea-row row-center-wrapper" style="color: {{ parameter.color }};">
+			<view class="name" style="margin-top: 4rpx;">{{parameter.title}}</view>
+			<view class="iconfont icon-fanhui" wx:if="{{ parameter.return==1 }}" bindtap="return"></view>
+		</view>
+	</view>
+</view>
+<view style="height:{{ navH }}rpx"></view>

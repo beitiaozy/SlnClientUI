@@ -1,0 +1,25 @@
+<!--pages/ceshi/ceshi.wxml-->
+<navbar parameter="{{parameter}}"></navbar>
+<view style="padding: 20rpx 30rpx;">
+  <button style="margin-top: 30rpx;" bindtap="manipulate" data-type="开门">开门</button>
+  <button style="margin-top: 30rpx;" bindtap="manipulate" data-type="关门">关门</button>
+  <button style="margin-top: 30rpx;" bindtap="manipulate" data-type="开电">开电</button>
+  <button style="margin-top: 30rpx;" bindtap="manipulate" data-type="断电">断电</button>
+  <button style="margin-top: 30rpx;" bindtap="manipulate" data-type="开水">开水</button>
+  <button style="margin-top: 30rpx;" bindtap="manipulate" data-type="关水">关水</button>
+  <button style="margin-top: 30rpx;" bindtap="manipulate" data-type="开启备用">开启备用</button>
+  <button style="margin-top: 30rpx;" bindtap="manipulate" data-type="关闭备用">关闭备用</button>
+  <button style="margin-top: 30rpx; display: flex;align-items: center; justify-content: center;" bindtap="manipulate" data-type="订单开始">订单开始</button>
+  <button style="margin-top: 30rpx; display: flex;align-items: center; justify-content: center;" bindtap="manipulate" data-type="订单结束">订单结束 </button>
+  <button style="margin-top: 30rpx; display: flex;align-items: center; justify-content: center;" bindtap="manipulate" data-type="开启欠费语音">开启欠费语音 </button>
+  <button style="margin-top: 30rpx; display: flex;align-items: center; justify-content: center;" bindtap="manipulate" data-type="关闭欠费语音">关闭欠费语音 </button>
+
+
+  <view style="display: flex; margin-top: 50rpx; align-items: center;">
+    <input type="text" placeholder="请输入IMEI" value="{{imei}}" bindinput="changeInput" style="border: 2rpx solid #ccc; flex: 1; "/>
+    <button style="width: 260rpx; margin: 0; padding: 0;" bindtap="edit">修改</button>
+  </view>
+
+  <button style="margin-top: 30rpx; margin-bottom: 30rpx;" bindtap="manipulate" data-type="status">获取状态</button>
+  <view style="color: red; text-align: center;">状态：{{status || '未知'}}</view>
+</view>

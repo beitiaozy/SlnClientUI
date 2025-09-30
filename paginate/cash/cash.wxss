@@ -1,0 +1,5 @@
+/* paginate/cash/cash.wxss */
+page {background: #e6e6e6;}
+.box {width: 100%; padding: 0 30rpx; box-sizing: border-box;}
+.cashList {width: 100%; box-sizing: border-box; background: #fff; display: flex; justify-content: space-between; padding: 20rpx 30rpx; align-items: center; margin-top: 20rpx; border-radius: 16rpx;}
+.cashList-fr {font-size: 30rpx;}

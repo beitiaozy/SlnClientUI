@@ -1,0 +1,65 @@
+<navbar parameter="{{ parameter }}" />
+<view class="container">
+    <!-- 轮播图 -->
+    <swiper
+            class="custom-swiper"
+            indicator-dots="true"
+            indicator-color="rgba(0,0,0,0.15)"
+            indicator-active-color="#999999"
+            style="height: 300rpx;"
+    >
+    <block wx:for="{{background}}" wx:key="index">
+        <swiper-item class="swiper-item {{current != index ? 'inactive' : ''}}">
+            <view class="swiper-box">
+                <view class="swiper-title">{{item.name1}}</view>
+                <view class="swiper-money">￥{{item.money}}</view>
+                <view class="swiper-stats">
+                    <view class="stat-item">
+                        <view class="stat-title">{{item.name2}}</view>
+                        <view class="stat-value">{{item.num}}</view>
+                    </view>
+                    <view class="stat-item">
+                        <view class="stat-title">{{item.name3}}</view>
+                        <view class="stat-value">{{item.dayMoney}}</view>
+                    </view>
+                </view>
+            </view>
+        </swiper-item>
+    </block>
+    </swiper>
+
+    <!-- 概览信息 -->
+    <view class="overview">
+        <view class="overview-card orange">
+            <view class="overview-title">设备总数</view>
+            <view class="overview-value">{{info.all_device_count}} 台</view>
+        </view>
+        <view class="overview-card blue">
+            <view class="overview-title">运营设备数</view>
+            <view class="overview-value">{{info.online_device_count}} 台</view>
+        </view>
+    </view>
+
+    <!-- 功能区域 -->
+    <view class="grid">
+        <block wx:for="{{menuList}}" wx:key="index">
+            <view class="grid-item" bindtap="goPages" data-url="{{item.url}}">
+                <block wx:if="{{item.image}}">
+                    <image src="{{item.image}}" style="width: 56rpx; height: 60rpx; margin-bottom: 10rpx;"></image>
+                </block>
+                <block wx:else>
+                    <view class="iconfont {{item.icon}}"
+                          style="font-size: 60rpx; color: {{item.color}}; margin-bottom: 10rpx;"></view>
+                </block>
+                <view class="grid-label">{{item.label}}</view>
+            </view>
+        </block>
+        <!-- 客服按钮 -->
+<!--        <label class="grid-item">-->
+<!--            <view class="iconfont icon-kehufuwukefu"-->
+<!--                  style="font-size: 60rpx; color: #1ab8e8; margin-bottom: 10rpx;"></view>-->
+<!--            <button open-type="contact" plain="true" class="kefu-btn">联系客服</button>-->
+<!--        </label>-->
+
+    </view>
+</view>

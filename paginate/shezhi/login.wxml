@@ -1,0 +1,24 @@
+<view class="container">
+  <view class="login-card">
+    <form bindsubmit="submit">
+      <view class="form-row">
+        <view class="label"><text class="required">*</text>手机号</view>
+        <view class="input-box">
+          <input type="number" name="username" placeholder="请输入手机号" value="{{mobile}}" />
+        </view>
+      </view>
+
+      <view class="form-row">
+        <view class="label"><text class="required">*</text>密码</view>
+        <view class="input-box">
+          <input type="password" name="password" value="{{password}}" bindinput="inputPassword" placeholder="请输入密码" />
+        </view>
+      </view>
+
+      <button class="submit-btn" form-type="submit">登 录</button>
+    </form>
+
+    <!-- 新增返回主页按钮 -->
+    <button class="back-btn" bindtap="goHome">返回主菜单</button>
+  </view>
+</view>

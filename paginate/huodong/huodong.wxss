@@ -1,0 +1,271 @@
+/* 优化后的样式 */
+.container {
+  padding: 20rpx;
+  background-color: #f5f5f5;
+  min-height: 100vh;
+}
+
+/* 分组标题 */
+.group-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #333;
+  margin: 30rpx 0 10rpx 20rpx;
+  padding: 15rpx 20rpx;
+  background-color: #fff;
+  border-radius: 12rpx;
+  box-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.06);
+}
+
+.group-icon {
+  font-size: 28rpx;
+  color: #999;
+}
+
+/* 卡片列表 */
+.card-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20rpx;
+}
+
+.activity-card {
+  background: #fff;
+  border-radius: 12rpx;
+  padding: 30rpx;
+  box-shadow: 0 4rpx 16rpx rgba(0, 0, 0, 0.06);
+  margin: 10rpx 0;
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24rpx;
+  border-bottom: 1rpx solid #f0f0f0;
+  padding-bottom: 20rpx;
+}
+
+.title {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #333;
+}
+
+.status-badge {
+  padding: 8rpx 16rpx;
+  border-radius: 20rpx;
+  font-size: 24rpx;
+}
+
+.status-badge.active {
+  background-color: #e6f7ff;
+  color: #1890ff;
+}
+
+.status-badge.inactive {
+  background-color: #f5f5f5;
+  color: #999;
+}
+
+.card-content {
+  margin-bottom: 24rpx;
+}
+
+.info-row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 16rpx;
+  font-size: 28rpx;
+}
+
+.info-row .label {
+  color: #666;
+  width: 140rpx;
+}
+
+.info-row .value {
+  color: #333;
+  flex: 1;
+  text-align: right;
+}
+
+.card-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 20rpx;
+}
+
+.action-btn {
+  padding: 12rpx 24rpx;
+  border-radius: 8rpx;
+  font-size: 26rpx;
+}
+
+.action-btn.edit {
+  background-color: #1890ff;
+  color: #fff;
+}
+
+.action-btn.delete {
+  background-color: #ff4d4f;
+  color: #fff;
+}
+
+/* 空状态 */
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 100rpx 0;
+  color: #999;
+}
+
+.empty-state .iconfont {
+  font-size: 120rpx;
+  margin-bottom: 30rpx;
+}
+
+.empty-text {
+  font-size: 30rpx;
+}
+
+/* 加载状态 */
+.loading-state {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 100rpx 0;
+}
+
+.loading-text {
+  font-size: 30rpx;
+  color: #999;
+}
+
+/* 悬浮按钮 */
+.floating-btn {
+  position: fixed;
+  right: 40rpx;
+  bottom: 80rpx;
+  width: 100rpx;
+  height: 100rpx;
+  border-radius: 50%;
+  background-color: #1890ff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  box-shadow: 0 6rpx 20rpx rgba(24, 144, 255, 0.4);
+  z-index: 999;
+}
+
+.floating-btn .iconfont {
+  font-size: 40rpx;
+}
+
+/* 弹窗样式 */
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 30rpx;
+  border-bottom: 1rpx solid #f0f0f0;
+  background-color: #fafafa;
+}
+
+.modal-title {
+  font-size: 32rpx;
+  font-weight: bold;
+}
+
+.modal-close .iconfont {
+  font-size: 36rpx;
+  color: #999;
+}
+
+.modal-content {
+  padding: 30rpx;
+  background-color: #fff;
+}
+
+.form-row {
+  display: flex;
+  align-items: center;
+  margin-bottom: 30rpx;
+}
+
+.form-label {
+  width: 160rpx;
+  font-size: 28rpx;
+  color: #333;
+}
+
+.form-input {
+  flex: 1;
+}
+
+.form-input input,
+.form-input .picker {
+  width: 100%;
+  padding: 20rpx;
+  border: 1rpx solid #e0e0e0;
+  border-radius: 8rpx;
+  font-size: 28rpx;
+  box-sizing: border-box;
+}
+
+.form-input input {
+  min-height: 70rpx;
+}
+.form-input .picker {
+  min-height: 20rpx;
+  line-height: 20rpx;
+}
+
+.form-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 30rpx;
+  margin-top: 50rpx;
+}
+
+.form-buttons .btn {
+  width: 200rpx;
+  height: 70rpx;
+  line-height: 70rpx;
+  font-size: 28rpx;
+  margin: 0;
+  border: none;
+}
+
+.btn.cancel {
+  background-color: #f5f5f5;
+  color: #333;
+}
+
+.btn.submit {
+  background-color: #1890ff;
+  color: #fff;
+}
+
+
+.iconfont {
+  font-family: "iconfont" !important;
+  font-size: 16px;
+  font-style: normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-wushuju:before {
+  content: "\e64f";
+}
+
+.icon-quxiao:before {
+  content: "\e60a";
+}

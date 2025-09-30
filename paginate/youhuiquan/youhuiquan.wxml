@@ -1,0 +1,86 @@
+<navbar parameter="{{ parameter }}"></navbar>
+
+<!-- 主区域 -->
+<view class="page-wrapper">
+    <!-- 列表不为空时 -->
+    <block wx:if="{{ list.length > 0 }}">
+        <scroll-view scroll-y="true" class="scroll-box">
+            <view class="card-list">
+                <radio-group bindchange="switchCard">
+                    <block wx:for="{{ list }}" wx:key="voucher_id">
+                        <view class="card {{ item.status === '已过期' || item.status === '已用完' ? 'disabled' : '' }}"
+                              data-index="{{ index }}" bindtap="switchCard">
+
+                            <!-- 卡券头部 - 根据不同类型显示不同背景色 -->
+                            <view class="card-bg {{item.type_class}}">
+                                <!-- 状态标签 -->
+                                <view class="status-tag {{item.status_class}}">
+                                    {{ item.status }}
+                                </view>
+
+                                <view class="card-header">
+                                    <view class="type-info">
+                                        <view class="type-name">{{ item.type_name }}</view>
+                                        <view class="amount-box">
+                                            <text class="price">
+                                                {{ item.type === 'EXCLUSIVE' ? item.total_money : item.amount }}
+                                            </text>
+                                            <text class="unit">
+                                                {{ item.type === 'EXCLUSIVE' ? '元' : (item.type === 'MONTH_COMBO' ? '天' : '次') }}
+                                            </text>
+                                        </view>
+                                    </view>
+
+                                    <view class="details-info">
+                                        <view class="detail-item" wx:if="{{ item.type === 'MONTH_COMBO' || item.type === 'DEAL_COMBO' }}">
+                                            <text class="label">单次最高：</text>
+                                            <text class="value">¥{{ item.total_money }}</text>
+                                        </view>
+                                        <view class="detail-item">
+                                            <text class="label">有效期至：</text>
+                                            <text class="value">{{ item.expire_date || '不限' }}</text>
+                                        </view>
+                                    </view>
+                                </view>
+                            </view>
+
+                            <!-- 卡券详情信息 -->
+                            <view class="card-bottom">
+                                <view class="card-info">
+                                    <view class="info-item">
+                                        <text class="label">适用场地：</text>
+                                        <text class="value ellipsis">{{ item.address_name || '全部场地' }}</text>
+                                    </view>
+
+                                    <view class="info-item" wx:if="{{ item.use_time }}">
+                                        <text class="label">下次可用：</text>
+                                        <text class="value">{{ item.use_time }}</text>
+                                    </view>
+
+<!--                                    <view class="info-item" wx:if="{{ item.create_time }}">-->
+<!--                                        <text class="label">创建时间：</text>-->
+<!--                                        <text class="value">{{ item.create_time }}</text>-->
+<!--                                    </view>-->
+                                </view>
+
+                                <view class="action-box">
+                                    <radio wx:if="{{ pre !== '0' }}" checked="{{ switchIndex === index }}" value="{{ index }}" />
+                                </view>
+                            </view>
+                        </view>
+                    </block>
+                </radio-group>
+            </view>
+        </scroll-view>
+    </block>
+
+    <!-- 空状态 -->
+    <block wx:else>
+        <view class="empty-box">
+            <view class="iconfont icon-wushuju empty-icon"></view>
+            <text class="empty-text">暂无卡券</text>
+        </view>
+    </block>
+</view>
+
+<authorize bind:onLoadFun="onLoadFun"></authorize>

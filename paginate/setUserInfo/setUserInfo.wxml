@@ -1,0 +1,16 @@
+<navbar parameter="{{parameter}}"></navbar>
+
+<form action="" bindsubmit="preserve">
+  <button class="avatar-wrapper app_btn_a" open-type="chooseAvatar" bind:chooseavatar="onChooseAvatar"
+    style="margin: 50rpx;">
+    <image class="avatar" src="{{avatarUrl}}" style="width: 120rpx; height: 120rpx; border-radius: 50%;"></image>
+  </button>
+  <view style="padding: 0 30rpx;">
+    <view style="display: flex;border: 2rpx solid #ccc; padding: 20rpx 30rpx; ">
+      <view style="margin-right: 50rpx;">昵称：</view>
+      <input type="nickname" class="weui-input" placeholder="请输入昵称" name="username" value="{{nickname}}"
+        bindtap="changeName" />
+    </view>
+    <button class="app_btn" form-type="submit" style="margin-top: 30rpx;">保存</button>
+  </view>
+</form>

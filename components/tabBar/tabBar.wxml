@@ -1,0 +1,29 @@
+<view class="tabBar">
+  <view class="tabBarList" bindtap="goTabBar" data-url="/pages/index/index">
+    <view>
+      <image src="/images/home-active.png" wx:if="{{active == '商城'}}" class="img"></image>
+      <image src="/images/home.png" class="img" wx:else></image>
+    </view>
+    <view>
+      <text class="{{active == '商城' ? 'tabBarActive' : ''}}">商城</text>
+    </view>
+  </view>
+  <view class="tabBarList" bindtap="goTabBar" data-url="/pages/flow/index">
+    <view>
+      <image src="/images/flow-active.png" wx:if="{{active == '购物车'}}" class="img"></image>
+      <image src="/images/flow.png" class="img" wx:else></image>
+    </view>
+    <view>
+      <text class="{{active == '购物车' ? 'tabBarActive' : ''}}">购物车</text>
+    </view>
+  </view>
+  <view class="tabBarList" bindtap="goTabBar" data-url="/pages/user/index">
+    <view>
+      <image src="/images/user-active.png" wx:if="{{active == '订单'}}" class="img"></image>
+      <image src="/images/user.png" class="img" wx:else></image>
+    </view>
+    <view>
+      <text class="{{active == '订单' ? 'tabBarActive' : ''}}">订单</text>
+    </view>
+  </view>
+</view>

@@ -1,0 +1,75 @@
+<navbar parameter="{{ parameter }}" />
+<view class="container">
+	<block wx:if="{{ list.length > 0 }}">
+		<scroll-view
+				enable-back-to-top="{{true}}"
+				class="scroll-view"
+				bindscrolltolower="getList"
+				scroll-y="{{true}}"
+		>
+			<view class="card-list">
+				<block wx:for="{{ list }}" wx:key="index">
+					<view class="card">
+						<view class="card-header">
+							<view class="shop-info">
+								<text class="shop-icon">🏪</text>
+								<text class="shop-name">{{ item.addr_name || '未知门店' }}</text>
+							</view>
+							<text class="date">{{ item.create_time }}</text>
+						</view>
+
+						<view wx:if="{{item.type == 1}}">
+							<view class="amount-section">
+								<view class="amount-item">
+									<text class="label">充值金额</text>
+									<text class="value recharge">￥{{ item.money }}</text>
+								</view>
+								<view class="amount-item">
+									<text class="label">赠送金额</text>
+									<text class="value gift">+￥{{ item.awards }}</text>
+								</view>
+							</view>
+						</view>
+						<view wx:if="{{item.type != 1}}">
+							<view class="amount-section">
+								<view class="amount-item">
+									<text class="label">充值金额</text>
+									<text class="value recharge">￥{{ item.amount }}</text>
+								</view>
+								<view class="amount-item">
+									<text class="label">购买服务</text>
+									<text class="value gift">+￥{{ item.attr.description }}</text>
+								</view>
+							</view>
+						</view>
+
+						<view class="card-footer">
+							<text class="order-no">订单号: {{ item.pay_code || '暂无' }}</text>
+
+							<view wx:if="{{item.type == 1}}">
+								<text class="status 'completed'">{{item.attr.description}}</text>
+							</view>
+						</view>
+					</view>
+				</block>
+			</view>
+
+			<view class="load-more" wx:if="{{ hasMore }}">
+				<text class="loading-text">加载中...</text>
+			</view>
+			<view class="no-more" wx:if="{{ !hasMore && list.length > 5 }}">
+				<text>没有更多记录了</text>
+			</view>
+		</scroll-view>
+	</block>
+
+	<block wx:else>
+		<view class="empty">
+			<image src="/images/empty-record.png" class="empty-icon" />
+			<text class="empty-text">暂无充值记录</text>
+			<text class="empty-subtext">快去进行第一次充值吧</text>
+			<button class="recharge-btn" bindtap="goToRecharge">立即充值</button>
+		</view>
+	</block>
+</view>
+<authorize bind:onLoadFun="onLoadFun"></authorize>

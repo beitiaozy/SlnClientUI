@@ -1,0 +1,292 @@
+<navbar parameter="{{ parameter }}"></navbar>
+<form action="" bindsubmit="sure">
+	<view style="padding: 30rpx; box-sizing: border-box; font-size: 30rpx;">
+		<view style="margin-bottom: 30rpx;">
+			<view class="p_title">扫描设备二维码</view>
+			<view
+				bindtap="scan"
+				style="background: #e1f2ff; height: 96rpx; display: flex; justify-content: center; align-items: center; color: #95ddd9;"
+			>
+				<text class="iconfont icon-saoyisao" style="margin: 0 30rpx 0 0; font-size: 50rpx;"></text>
+				<text>请扫描设备二维码并且核对ID</text>
+			</view>
+		</view>
+		<view class="row">
+			<view class="row_fl">
+				<text style="color:red;">*</text>
+				设备号
+			</view>
+			<view class="row_fr">
+				<input
+					type="text"
+					name="dev_id"
+					value="{{ params.dev_id }}"
+					placeholder="请输入设备号或扫码设备码"
+					bindinput="changeInput"
+					data-type="dev_id"
+				/>
+			</view>
+		</view>
+		<view class="row">
+			<view class="row_fl">
+				<text style="color:red;">*</text>
+				设备名称
+			</view>
+			<view class="row_fr">
+				<input type="text" name="name" value="{{ params.name }}" placeholder="请输入设备名称" bindinput="changeInput" data-type="name" />
+			</view>
+		</view>
+		<view class="row">
+			<view class="row_fl">
+				<text style="color:red;">*</text>
+				选择场所
+			</view>
+			<view class="row_fr flex_sw">
+				<input type="text" disabled value="{{ params.address }}" bindtap="select_changsuo" placeholder="请选择场所" />
+				<view class="iconfont icon-zhiyuandidian5"></view>
+			</view>
+		</view>
+		<view class="row">
+			<view class="row_fl">
+				<text style="color:red;">*</text>
+				门数
+			</view>
+			<view class="row_fr flex_sw">
+				<picker mode="selector" style="width:100%;" bindchange="bindPickerChange" value="{{ params.door_num }}" range="{{ typeArray }}">
+					<view class="picker" wx:if="{{ params.door_num }}">{{typeArray[params.door_num]}}</view>
+					<view wx:else style="color: #808080;">请选择门数</view>
+				</picker>
+			</view>
+		</view>
+		<view class="row">
+			<view class="row_fl">音响SN</view>
+			<view class="row_fr">
+				<input
+					type="text"
+					name="video_id"
+					value="{{ params.video_id }}"
+					placeholder="请输入音响SN"
+					bindinput="changeInput"
+					data-type="video_id"
+				/>
+			</view>
+		</view>
+		<view class="row">
+			<view class="row_fl">音响版本号</view>
+			<view class="row_fr">
+				<input
+					type="text"
+					name="video_version"
+					value="{{ params.video_version }}"
+					placeholder="请输入音响版本号"
+					bindinput="changeInput"
+					data-type="video_version"
+				/>
+			</view>
+		</view>
+		<view class="row">
+			<view class="row_fl">
+				<text style="color:red;">*</text>
+				类型
+			</view>
+			<view class="row_fr flex_sw">
+				<picker mode="selector" style="width:100%;" bindchange="switchType" value="{{ typeIndex }}" range="{{ type }}">
+					<view>{{type[typeIndex]}}</view>
+				</picker>
+			</view>
+		</view>
+		<block wx:if="{{ typeIndex === '1' }}">
+			<view class="row">
+				<view class="row_fl">
+					<text style="color:red;">*</text>
+					基础时间
+				</view>
+				<view class="row_fr flex_sw">
+					<input
+						type="text"
+						name="base_time_x"
+						placeholder="请输入基础时间"
+						value="{{ params.base_time_x }}"
+						bindinput="changeInput"
+						data-type="base_time_x"
+					/>
+					<view>分钟</view>
+				</view>
+			</view>
+			<view class="row">
+				<view class="row_fl">
+					<text style="color:red;">*</text>
+					基础价格
+				</view>
+				<view class="row_fr flex_sw">
+					<input
+						type="text"
+						name="price_y"
+						placeholder="请输入基础价格"
+						value="{{ params.price_y }}"
+						bindinput="changeInput"
+						data-type="price_y"
+					/>
+					<view>元</view>
+				</view>
+			</view>
+			<view class="row">
+				<view class="row_fl">
+					<text style="color:red;">*</text>
+					超时价格
+				</view>
+				<view class="row_fr flex_sw">
+					<input
+						type="text"
+						name="price_z"
+						placeholder="请输入超时价格"
+						value="{{ params.price_z }}"
+						bindinput="changeInput"
+						data-type="price_z"
+					/>
+					<view>元</view>
+				</view>
+			</view>
+			<view class="row">
+				<view class="row_fl">
+					<text style="color:red;">*</text>
+					泡沫每秒价格
+				</view>
+				<view class="row_fr flex_sw">
+					<input
+						type="text"
+						name="prize_pm"
+						placeholder="请输入泡沫每秒价格"
+						value="{{ params.prize_pm }}"
+						bindinput="changeInput"
+						data-type="prize_pm"
+					/>
+					<view>元</view>
+				</view>
+			</view>
+			<view class="row">
+				<view class="row_fl">
+					<text style="color:red;">*</text>
+					水流每秒价格
+				</view>
+				<view class="row_fr flex_sw">
+					<input
+						type="text"
+						name="prize_sl"
+						placeholder="请输入水流每秒价格"
+						value="{{ params.prize_sl }}"
+						bindinput="changeInput"
+						data-type="prize_sl"
+					/>
+					<view>元</view>
+				</view>
+			</view>
+		</block>
+		<block wx:if="{{ typeIndex === '2' }}">
+			<view class="row">
+				<view class="row_fl">
+					<text style="color:red;">*</text>
+					自动洗车单价
+				</view>
+				<view class="row_fr flex_sw">
+					<input
+						type="text"
+						style="flex:1"
+						name="money"
+						placeholder="自动洗车单价(不低于15元)"
+						value="{{ params.money }}"
+						bindinput="changeInput"
+						data-type="money"
+					/>
+					<view>元</view>
+				</view>
+			</view>
+		</block>
+		<view style="margin-bottom: 38rpx;" wx:if="{{ false }}">
+			<view class="p_title">
+				输入计费信息
+				<text style="color: #95ddd9; font-weight: 400; margin: 0 50rpx 0">小时</text>
+				<text style="font-weight: 400;">半小时</text>
+			</view>
+			<view style="margin: 0 0 30rpx 0;">
+				<view style="display: flex; justify-content: center;align-items: center;">
+					<input
+						type="text"
+						placeholder=""
+						style="border-bottom: 1rpx solid #ccc; width: 160rpx; margin: 16rpx 4rpx 16rpx 0; text-align: center"
+					/>
+					<view style="width: 200rpx;">分钟前免费</view>
+				</view>
+				<view style="display: flex; justify-content: center;align-items: center;">
+					<input
+						type="text"
+						placeholder=""
+						style="border-bottom: 1rpx solid #ccc; width: 160rpx; margin: 16rpx 4rpx 16rpx 0; text-align: center"
+					/>
+					<view style="width: 200rpx;">元/小时</view>
+				</view>
+				<view style="display: flex; justify-content: center;align-items: center;">
+					<input
+						type="text"
+						placeholder=""
+						style="border-bottom: 1rpx solid #ccc; width: 160rpx; margin: 16rpx 4rpx 16rpx 0; text-align: center"
+					/>
+					<view style="width: 200rpx;">元/天（上限）</view>
+				</view>
+			</view>
+			<view>
+				<input type="text" placeholder="请输入需要备注的信息" style="border-bottom: 1rpx solid #ccc; padding-bottom: 10rpx;" />
+			</view>
+		</view>
+		<view style="width: 80vw; margin: 0 auto;">
+			<button
+				class="app_btn"
+				hover-class="app_btn_hover"
+				style="margin: 0 0 30rpx 0; border-radius: 40rpx; width: 100%;"
+				form-type="submit"
+				data-type="继续"
+			>继续添加设备</button>
+			<button class="app_btn" hover-class="app_btn_hover" style="border-radius: 40rpx; width: 100%;" form-type="submit">完成</button>
+		</view>
+	</view>
+</form>
+<page-container show="{{ isSelect }}">
+	<view wx:if="{{ true }}" class="add_info {{ isSelect ? 'add_info2' : 'add_info' }}" style="position: relative;">
+		<view class="add_top" style="display: flex;justify-content: space-between; padding: 20rpx 30rpx 0;">
+			<view>选择场所</view>
+			<view bindtap="select_close">
+				<text class="iconfont icon-quxiao"></text>
+			</view>
+		</view>
+		<scroll-view
+			scroll-y
+			style="height: calc(90vh - 64rpx - {{ top }}rpx); padding: 30rpx 50rpx; box-sizing: border-box; font-size: 30rpx;"
+		>
+			<!-- <radio-group bindchange="radioChange"> -->
+			<view wx:for="{{ list }}" wx:key="index">
+				<label
+					for=""
+					style="display: flex; border-bottom: 1rpx solid #cccccc; margin-bottom: 30rpx; justify-content: space-between; padding: 0 50rpx 0 0;"
+					bindtap="changeRadio"
+					data-item="{{ item }}"
+				>
+					<view>
+						<view style="margin: 30rpx 0 20rpx 0;">{{item.addr_name}}</view>
+						<view>{{item.addr_location}}</view>
+					</view>
+					<view style="display: flex; align-items: center;">
+						<radio value="{{ item.id }}" checked="{{ item.id == info.address_id }}" />
+					</view>
+				</label>
+			</view>
+			<!-- </radio-group> -->
+		</scroll-view>
+		<view
+			wx:if="{{ list.length == 0 }}"
+			style="position: absolute;top: 50%; left: 50%; transform: translate(-50%, -95%); text-align: center;"
+		>
+			<view class="iconfont icon-wushuju" style="font-size: 100rpx;"></view>
+			<text style="font-size: 30rpx;">暂无信息</text>
+		</view>
+	</view>
+</page-container>

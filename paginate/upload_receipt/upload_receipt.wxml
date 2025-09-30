@@ -1,0 +1,22 @@
+<navbar parameter="{{ parameter }}" />
+<view class="container">
+    <view class="title">停车费支付凭证</view>
+
+    <view class="upload-section">
+        <view class="image-preview" wx:if="{{image}}">
+            <image src="{{image}}" mode="aspectFit" class="preview"></image>
+        </view>
+        <button type="primary" bindtap="chooseImage">选择图片</button>
+    </view>
+
+    <view class="input-section">
+        <textarea
+                placeholder="请输入描述信息"
+                value="{{description}}"
+                bindinput="onDescInput">
+        </textarea>
+    </view>
+
+    <button type="primary" class="submit-btn" bindtap="submitForm">提交</button>
+</view>
+<authorize bind:onLoadFun="onLoadFun" />

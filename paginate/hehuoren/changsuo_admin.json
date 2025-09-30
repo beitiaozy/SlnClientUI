@@ -1,0 +1,7 @@
+{
+  "navigationBarTitleText": "场所管理",
+  "navigationBarBackgroundColor": "#4d6ef1",
+  "usingComponents": {
+    "navbar": "/components/navbar/index"
+  }
+}

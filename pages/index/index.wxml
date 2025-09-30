@@ -1,0 +1,48 @@
+<navbar parameter="{{ parameter }}" />
+
+<view>
+	<!-- 页面头部 -->
+	<view class="card-container">
+		<view class="card-header">
+			<text class="name">{{ userInfo.addr_name }}</text>
+		</view>
+
+		<!-- 余额展示 -->
+		<view class="balance-section">
+			<view class="balance-item">
+				<text>可用金额（含赠送）</text>
+				<view class="value">{{ userInfo.money || 0 }}元</view>
+			</view>
+			<view class="balance-item">
+				<text>赠送余额</text>
+				<view class="value">{{ userInfo.ext_money || 0 }}元</view>
+			</view>
+		</view>
+
+		<!-- 充值按钮 -->
+		<view class="recharge-btn" data-url="/paginate/invest/invest" bindtap="goPages">
+			<text>充值</text>
+		</view>
+
+		<!-- 当前订单信息 -->
+		<view wx:if="{{ state === '使用中' }}" class="order-info">
+			<text>已使用时间：{{ timeMoney.time }}</text>
+		</view>
+	</view>
+</view>
+
+<!-- 底部按钮 -->
+<view class="bottom-btn">
+	<block wx:if="{{ state === '使用中' }}">
+		<view class="stop-btn" data-url="stop" bindtap="goPages">
+			<text>结束洗车</text>
+		</view>
+	</block>
+	<block wx:else>
+		<view class="stop-btn" data-url="saoma" bindtap="goPages">
+			<text>扫码启动车辆</text>
+		</view>
+	</block>
+</view>
+
+<authorize bind:onLoadFun="onLoadFun" iShidden="{{ iShidden }}" />

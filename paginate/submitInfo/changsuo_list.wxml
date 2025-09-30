@@ -1,0 +1,64 @@
+<navbar parameter='{{parameter}}'></navbar>
+<view class="box">
+  <view class="search-box-bg">
+    <form action="" bindsubmit="search">
+      <view class="search-box">
+        <input type="text" name="search" placeholder="设备编号或名称" />
+        <button form-type="submit">搜索</button>
+      </view>
+    </form>
+  </view>
+  <view class="main">
+    <view class="list" wx:for="{{list}}" wx:key="index">
+      <view class="list_fl" style="flex: 1;">
+        <view>设备名称:{{item.name}}</view>
+        <view style="font-size: 26rpx; margin: 6rpx 0 10rpx; color: #6a55de;">设备号:{{item.dev_id}}</view>
+        <view style="font-size: 26rpx;">货道数量:{{item.amount}}</view>
+      </view>
+      <view class="list_center" style="color: #808080;">
+        <view>状态：{{item.status}}</view>
+        <view><button class="btn_lan" style="margin: 6rpx 0 0; padding: 0; height: 60rpx;line-height: 60rpx;" bindtap="edit" data-item="{{item}}">修改</button></view>
+      </view>
+      <!-- <view class="list_fr">
+        <view class="iconfont icon-youjiantou" style="font-style: 200rpx; font-weight: 550;"></view>
+      </view> -->
+    </view>
+    <view wx:if="{{list.length == 0}}" style="position: fixed;top: 50%; left: 50%; transform: translate(-50%, -95%); text-align: center;">
+      <view class="iconfont icon-wushuju" style="font-size: 100rpx;"></view>
+      <text style="font-size: 30rpx;">暂无信息</text>
+    </view>
+  </view>
+  <view class="position" catchtap="goPages" data-url="/paginate/hehuoren/shebeiAdd">
+    <text class="iconfont icon-jiahao" style="font-size: 40rpx;"></text>
+  </view>
+</view>
+
+<!-- 修改 遮罩层 -->
+<view wx:if="{{isEdit}}" class="add_zzc {{isEdit ? 'add_zzc2' : ''}}" bindtap="edit_close"></view>
+<view wx:if="{{true}}" class="add_info {{isEdit ? 'add_info2' : 'add_info'}}">
+  <view class="add_top">
+    <view>修改</view>
+    <view bindtap="edit_close"><text class="iconfont icon-quxiao"></text></view>
+  </view>
+  <view style="padding: 30rpx; font-size: 30rpx;">
+    <form action="">
+      <view class="row">
+        <view class="row_fl">
+          <text style="color:red;">*</text>货道数量
+        </view>
+        <view class="row_fr" style="display: flex;align-items: center;justify-content: flex-end; margin-right: 30rpx;">
+          <view bindtap="delNum"><text class="iconfont icon-jianhao"></text></view>
+          <input type="number" value="{{editValue.amount}}" style="border: 2rpx solid #000;width: 100rpx; text-align: center; margin: 0 10rpx 0; border-radius: 12rpx;"
+          bindblur="changeInput"
+           />
+          <view bindtap="addNum"><text class="iconfont icon-jiahao"></text></view>
+        </view>
+      </view>
+      <view style="display: flex; justify-content: center; margin: 30rpx 0 0 0;">
+        <button bindtap="sure" class="add_btn" style="background: #4d6ef1; ">确认保存</button>
+        <!-- <button form-type="reset" class="add_btn" style="border: 2rpx solid #4d6fa3; color: #4d6fa3;">重置</button> -->
+      </view>
+    </form>
+  </view>
+
+</view>

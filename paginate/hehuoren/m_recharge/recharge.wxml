@@ -1,0 +1,129 @@
+<navbar parameter="{{ parameter }}"></navbar>
+<view class="tab-content-item">
+  <!-- 已登录状态 -->
+  <view wx:if="{{isLogin}}" class="goods-detail-box">
+    <!-- 场地 & 手机号筛选 -->
+    <view class="search-bar">
+      <view class="address-selector">
+        <picker
+                class="address-picker"
+                mode="selector"
+                range="{{addressList}}"
+                range-key="name"
+                value="{{addressIndex}}"
+                bindchange="onAddressChange"
+        >
+          <view class="picker">
+            <text class="picker-text">{{ currentAddress ? currentAddress.short_name : '选择场地' }}</text>
+            <image src="/images/arrow-down.png" class="picker-icon"></image>
+          </view>
+        </picker>
+        <view class="full-name-tip" wx:if="{{showFullName && currentAddress}}">
+          {{ currentAddress.name }}
+        </view>
+      </view>
+
+      <view class="search-input-container">
+        <image src="/images/search-icon.png" class="search-icon"></image>
+        <input
+                class="search-input"
+                placeholder="输入手机号查询"
+                placeholder-class="placeholder-style"
+                value="{{ mobile }}"
+                bindinput="onSearchInput"
+        />
+      </view>
+
+      <button
+              class="search-btn"
+              bindtap="resetList"
+              disabled="{{!currentAddress}}"
+      >搜索</button>
+    </view>
+    <!-- 日期筛选 + 总览 -->
+    <view class="date-filter-container">
+      <view class="date-picker-group">
+        <picker mode="date" value="{{date}}" fields="day" bindchange="bindDateChange">
+          <view class="date-picker {{date ? 'active' : ''}}">
+            <image src="/images/calendar.png" class="date-icon"></image>
+            <text>{{date || '开始日期'}}</text>
+          </view>
+        </picker>
+        <text class="date-separator">至</text>
+        <picker mode="date" value="{{date2}}" fields="day" bindchange="bindDateChange2">
+          <view class="date-picker {{date2 ? 'active' : ''}}">
+            <image src="/images/calendar.png" class="date-icon"></image>
+            <text>{{date2 || '结束日期'}}</text>
+          </view>
+        </picker>
+      </view>
+
+      <view class="stats-container">
+        <view class="stat-item">
+          <text class="stat-label">总充值次数</text>
+          <text class="stat-value">{{info.order_count}}</text>
+        </view>
+        <view class="stat-item">
+          <text class="stat-label">总充值金额</text>
+          <text class="stat-value money">￥{{info.total_money}}</text>
+        </view>
+        <view class="stat-item">
+          <text class="stat-label">总赠送金额</text>
+          <text class="stat-value money">￥{{info.total_awards}}</text>
+        </view>
+      </view>
+    </view>
+    <!-- 列表区域 -->
+    <view class="main">
+      <scroll-view
+              scroll-y
+              style="height: calc(100vh - 380rpx - {{parameter.navH}}rpx);"
+              bindscrolltolower="bindscrolltolower"
+      >
+        <view class="list" wx:for="{{list}}" wx:key="index">
+          <view class="avatar-container">
+            <image src="{{item.avatar || '/images/default-avatar.png'}}" class="avatar"></image>
+          </view>
+          <view class="list-content">
+            <view class="info-row">
+              <text class="info-label">订单号：</text>
+              <text class="info-value">{{item.code}}</text>
+            </view>
+            <view class="info-row">
+              <text class="info-label">用户名：</text>
+              <text class="info-value" data-copy="{{item.nickname}}">{{item.nickname}}</text>
+            </view>
+            <view class="info-row">
+              <text class="info-label">联系方式：</text>
+              <text class="info-value copyable" data-item="{{item}}" catchtap="copy">{{item.mobile}}</text>
+            </view>
+            <view class="info-row highlight money-row">
+              <view class="money-item">
+                <text class="info-label">充值金额：</text>
+                <text class="info-value money">￥{{item.order_money}}</text>
+              </view>
+              <view class="money-item">
+                <text class="info-label">赠送金额：</text>
+                <text class="info-value money">￥{{item.order_ext_money}}</text>
+              </view>
+            </view>
+            <view class="info-row">
+              <text class="info-label">充值时间：</text>
+              <text class="info-value">{{item.create_time}}</text>
+            </view>
+          </view>
+        </view>
+
+        <!-- 加载更多/无数据提示 -->
+        <view wx:if="{{loading}}" class="loading-tip">加载中...</view>
+        <view wx:if="{{!loading && list.length === 0}}" class="empty-state">
+          <image src="/images/empty.png" class="empty-image"></image>
+          <text class="empty-text">暂无充值记录</text>
+        </view>
+      </scroll-view>
+    </view>
+  </view>
+
+  <!-- 未登录状态 -->
+  <view wx:else class="login-tip">请先登录</view>
+</view>

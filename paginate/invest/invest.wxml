@@ -1,0 +1,75 @@
+<navbar parameter="{{ parameter }}" />
+<form bindsubmit="submitSub" report-submit="true">
+	<view class="container">
+		<!-- 顶部门店信息 -->
+		<view class="store-info">
+			<view class="store-name">洗涞乐自助洗车</view>
+			<view class="store-address">虎门店为您的爱车保驾护航</view>
+		</view>
+
+		<!-- 活动充值区域 -->
+		<view wx:if="{{activities.length > 0}}" class="activity-section">
+			<view class="section-title">优惠活动</view>
+			<view class="activity-cards">
+				<view wx:for="{{activities}}" wx:key="id" class="activity-card {{activeType === 'activity' && activeIndex === index ? 'active' : ''}}"
+					  bindtap="selectActivity" data-index="{{index}}" data-id="{{item.id}}">
+					<view class="activity-tag" wx:if="{{item.type === 'newcomer'}}">新用户专享</view>
+					<view class="activity-title">{{item.title}}</view>
+					<view class="amount">
+						<text class="money">{{item.money}}元</text>
+						<text wx:if="{{item.awards > 0}}" class="bonus">送{{item.awards}}元</text>
+					</view>
+					<view class="deadline">有效期至: {{item.expiration_date}}</view>
+				</view>
+			</view>
+		</view>
+
+		<!-- 套餐优惠区域 -->
+		<view wx:if="{{combo.length > 0}}" class="combo-section">
+			<view class="section-title">套餐优惠</view>
+			<view class="combo-cards">
+				<view wx:for="{{combo}}" wx:key="id" class="combo-card {{activeType === 'combo' && activeIndex === index ? 'active' : ''}}"
+					  bindtap="selectCombo" data-index="{{index}}" data-id="{{item.id}}">
+					<view class="combo-tag" wx:if="{{item.type === 'month_combo'}}">月套餐</view>
+					<view class="combo-tag" wx:if="{{item.type === 'deal_combo'}}">次套餐</view>
+					<view class="combo-title">{{item.title}}</view>
+					<view class="combo-details">
+						<view class="combo-price">{{item.money}}元</view>
+						<view class="combo-count">送{{item.awards}}次</view>
+					</view>
+					<view class="combo-deadline">有效期至: {{item.expiration_date || '2099-12-31'}}</view>
+				</view>
+			</view>
+		</view>
+
+		<!-- 常规充值区域 -->
+		<view class="regular-section">
+			<view class="section-title">常规充值</view>
+			<view class="regular-options">
+				<view wx:for="{{list}}" wx:key="index" class="regular-option {{activeType === 'regular' && activeIndex === index ? 'active' : ''}}"
+					  bindtap="selectRegular" data-index="{{index}}">
+					<view class="amount">
+						<text class="money">{{item.money}}元</text>
+						<text wx:if="{{item.awards > 0}}" class="bonus">送{{item.awards}}元</text>
+					</view>
+				</view>
+			</view>
+		</view>
+
+		<!-- 充值说明 -->
+		<view class="instructions">
+			<view class="section-title">充值说明</view>
+			<view class="content">{{datas.chong_zhi || '暂无说明'}}</view>
+		</view>
+
+		<!-- 底部操作区域 -->
+		<view class="bottom-action">
+			<view class="agreement">
+				<checkbox checked="{{ agree }}" bindtap="onAgreeChange" />
+				<text>我已阅读并同意</text>
+				<navigator url="/paginate/agreement/agreement" class="link">《充值协议》</navigator>
+			</view>
+			<button formType="submit" class="recharge-btn" hover-class="btn-hover">立即充值</button>
+		</view>
+	</view>
+</form>

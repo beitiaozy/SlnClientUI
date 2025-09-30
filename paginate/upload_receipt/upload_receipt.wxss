@@ -1,0 +1,49 @@
+.container {
+    height: calc(100vh - 144rpx);
+}
+
+.title {
+    font-size: 36rpx;
+    font-weight: bold;
+    margin-bottom: 30rpx;
+    text-align: center;
+}
+
+.upload-section {
+    margin-bottom: 40rpx;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.image-preview .preview {
+    width: 300rpx;
+    height: 300rpx;
+    border-radius: 10rpx;
+    margin-bottom: 20rpx;
+    border: 1px solid #ccc;
+}
+
+.input-section textarea {
+    width: 100%;
+    min-height: 150rpx;
+    border: 1px solid #ccc;
+    padding: 20rpx;
+    border-radius: 10rpx;
+    font-size: 28rpx;
+    background-color: #fff;
+}
+
+.submit-btn {
+    margin-top: 40rpx;
+}
+
+.back-btn {
+    font-size: 24rpx;
+    margin-left: 20rpx;
+    background: #ccc;
+    color: #fff;
+    padding: 6rpx 20rpx;
+    border-radius: 20rpx;
+}
+

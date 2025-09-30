@@ -1,0 +1,138 @@
+<navbar parameter="{{ parameter }}" />
+<view class="box">
+	<view class="main">
+		<view
+				wx:for="{{ list }}"
+				wx:key="index"
+				class="list"
+		>
+			<view class="list-header">
+				<view class="list-title">
+					<view>{{item.addr_name}}</view>
+				</view>
+				<view class="list-actions">
+					<button
+							class="app_btn"
+							catchtap="goPages"
+							data-url="/paginate/huodong/huodong"
+							data-item="{{ item }}"
+					>活动设置</button>
+					<button
+							class="app_btn"
+							catchtap="edit"
+							data-item="{{ item }}"
+					>修改</button>
+					<button
+							class="btn_red"
+							catchtap="del"
+							data-item="{{ item }}"
+					>{{ item.status == '正常' ? '删除' : '还原' }}</button>
+				</view>
+			</view>
+		</view>
+
+		<view wx:if="{{ list.length == 0 }}" class="no-data">
+			<view class="iconfont icon-wushuju"></view>
+			<view>暂无信息</view>
+		</view>
+	</view>
+
+	<view class="position" catchtap="goPages" data-url="/paginate/submitInfo/submitInfo">
+		<text class="iconfont icon-jiahao"></text>
+	</view>
+</view>
+
+<page-container show="{{ isEdit }}" bind:afterleave="edit_close">
+	<scroll-view scroll-y style="height:80vh">
+		<view class="add_top">
+			<view>修改场所信息</view>
+			<view bindtap="edit_close">
+				<text class="iconfont icon-quxiao"></text>
+			</view>
+		</view>
+
+		<form bindsubmit="editSubmit">
+			<view class="row">
+				<view class="row_fl">场所名称</view>
+				<view class="row_fr">
+					<input
+							type="text"
+							name="addr_name"
+							value="{{ editValue.addr_name }}"
+							placeholder="请输入场所名称"
+							bindblur="changeInput"
+							data-name="addr_name"
+					/>
+				</view>
+			</view>
+
+			<view class="row">
+				<view class="row_fl">选择场所</view>
+				<view class="row_fr" style="display: flex; align-items: center;">
+					<input type="text" disabled value="{{ position }}" bindtap="getPostion" placeholder="请选择场所" />
+					<view class="iconfont icon-zhiyuandidian5" style="color: #56b5e3; margin-left: 10rpx;" />
+				</view>
+			</view>
+
+			<view class="row">
+				<view class="row_fl">场所地区</view>
+				<view class="row_fr">
+					<input type="text" disabled name="addr_area" value="{{ editValue.addr_area }}" />
+				</view>
+			</view>
+
+			<view class="row">
+				<view class="row_fl">场所地段</view>
+				<view class="row_fr">
+					<input type="text" disabled name="addr_location" value="{{ editValue.addr_location }}" />
+				</view>
+			</view>
+
+			<view class="row">
+				<view class="row_fl">管理员</view>
+				<view class="row_fr">
+					<input
+							type="text"
+							name="addr_person_name"
+							value="{{ editValue.addr_person_name }}"
+							placeholder="请输入管理员姓名"
+							bindblur="changeInput"
+							data-name="addr_person_name"
+					/>
+				</view>
+			</view>
+
+			<view class="row">
+				<view class="row_fl">手机号</view>
+				<view class="row_fr">
+					<input
+							type="text"
+							name="addr_person_mobile"
+							value="{{ editValue.addr_person_mobile }}"
+							placeholder="请输入管理员手机号"
+							bindblur="changeInput"
+							data-name="addr_person_mobile"
+					/>
+				</view>
+			</view>
+
+			<view class="row">
+				<view class="row_fl">场所图片</view>
+				<view class="row_fr" style="display: flex; align-items: center;">
+					<view wx:if="{{ editValue.img }}" style="margin-right: 20rpx;">
+						<image style="width: 120rpx; height: 120rpx; border-radius: 8rpx;" src="{{ editValue.img }}" />
+					</view>
+					<view
+							style="width: 120rpx; height: 120rpx; display: flex; flex-direction: column; align-items: center; justify-content: center; border: 1rpx dashed #ccc; border-radius: 8rpx;"
+							bindtap="chooseMedia"
+					>
+						<view class="iconfont icon-jiahao" style="font-size: 40rpx; color: #999;" />
+						<view style="font-size: 24rpx; color: #999; margin-top: 10rpx;">上传</view>
+					</view>
+				</view>
+			</view>
+
+			<button form-type="submit" class="add_btn">确认保存</button>
+		</form>
+	</scroll-view>
+</page-container>

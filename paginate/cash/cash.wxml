@@ -1,0 +1,16 @@
+<navbar parameter='{{parameter}}'></navbar>
+<view class="box">
+  <block wx:if="{{withdrawList.length !==0}}">
+    <view class="cashList" wx:for="{{withdrawList}}" wx:key="index">
+      <view class="cashList-fl">
+        <view style="margin-bottom: 10rpx; font-size: 26rpx;"><text>提现到</text><text>支付宝</text><text>({{item.status}})</text></view>
+        <view style="color: #808080; font-size: 24rpx;">{{item.create_time}}</view>
+      </view>
+      <view class="cashList-fr">{{item.money}} 元</view>
+    </view>
+  </block>
+  <block wx:else>
+    <view style="margin: 120rpx 0 10rpx; text-align: center;"><text class="iconfont icon-wushuju" style="font-size: 120rpx;"></text></view>
+    <view style="text-align: center;">亲， 暂无提现记录</view>
+  </block>
+</view>

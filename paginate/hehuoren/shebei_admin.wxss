@@ -1,0 +1,159 @@
+/* 容器 */
+.container {
+  padding: 20rpx;
+}
+
+/* 设备卡片 */
+.device-card {
+  background: #fff;
+  border-radius: 20rpx;
+  box-shadow: 0 4rpx 12rpx rgba(0,0,0,0.05);
+  padding: 20rpx;
+  margin-bottom: 20rpx;
+}
+.device-info .info-item {
+  display: flex;
+  font-size: 28rpx;
+  margin-bottom: 12rpx;
+}
+.device-info .label {
+  width: 160rpx;
+  color: #999;
+}
+.device-info .value {
+  flex: 1;
+  color: #333;
+}
+.device-info .value.highlight {
+  color: #6a55de;
+  font-weight: 600;
+}
+.device-actions {
+  display: flex;
+  gap: 20rpx;
+  margin-top: 20rpx;
+}
+.app_btn {
+  background: #4d6ef1;
+  color: #fff;
+  padding: 12rpx 24rpx;
+  border-radius: 30rpx;
+  font-size: 28rpx;
+}
+.app_btn_hover {
+  background: #3a5edb;
+}
+.empty {
+  text-align: center;
+  color: #999;
+  font-size: 28rpx;
+  margin-top: 200rpx;
+}
+.empty .iconfont {
+  font-size: 100rpx;
+  color: #ddd;
+  margin-bottom: 20rpx;
+}
+.fab {
+  position: fixed;
+  bottom: 60rpx;
+  right: 60rpx;
+  width: 100rpx;
+  height: 100rpx;
+  background: #4d6ef1;
+  border-radius: 50%;
+  box-shadow: 0 4rpx 8rpx rgba(0,0,0,0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.fab .iconfont {
+  color: #fff;
+  font-size: 50rpx;
+}
+
+/* 弹窗通用 */
+.modal-mask {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0,0,0,0.4);
+  z-index: 1000;
+}
+.modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  width: 80%;
+  background: #fff;
+  border-radius: 20rpx;
+  transform: translate(-50%, -50%);
+  z-index: 1001;
+  overflow: hidden;
+}
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20rpx;
+  border-bottom: 1rpx solid #f0f0f0;
+  font-size: 30rpx;
+}
+.modal-body {
+  padding: 20rpx;
+}
+.form-item {
+  margin-bottom: 20rpx;
+}
+.form-item .label {
+  display: block;
+  margin-bottom: 8rpx;
+  color: #666;
+}
+.form-item .label.required::before {
+  content: "*";
+  color: red;
+  margin-right: 6rpx;
+}
+.form-item input {
+  width: 100%;
+  border: 1rpx solid #ddd;
+  border-radius: 10rpx;
+  padding: 12rpx;
+  font-size: 28rpx;
+}
+.picker {
+  width: 100%;
+  border: 1rpx solid #ddd;
+  border-radius: 10rpx;
+  padding: 12rpx;
+  font-size: 28rpx;
+}
+.tips {
+  font-size: 24rpx;
+  color: red;
+  margin-top: 20rpx;
+}
+.modal-footer {
+  margin-top: 20rpx;
+  text-align: center;
+}
+
+/* 选择场所 */
+.select-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1rpx solid #f0f0f0;
+  padding: 20rpx;
+}
+.select-item .name {
+  font-size: 28rpx;
+  font-weight: 600;
+}
+.select-item .location {
+  font-size: 24rpx;
+  color: #999;
+}

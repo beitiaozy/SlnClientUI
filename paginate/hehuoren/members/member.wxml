@@ -1,0 +1,174 @@
+<navbar parameter='{{parameter}}'></navbar>
+<view class="container">
+    <!-- 搜索栏和场地选择器 -->
+    <!-- 搜索栏和场地选择器合并 -->
+    <view class="search-bar">
+        <!-- 场地选择器在左 -->
+        <picker
+                class="address-picker"
+                mode="selector"
+                range="{{addressList}}"
+                range-key="name"
+                value="{{addressIndex}}"
+                bindchange="onAddressChange"
+                bindtap="onAddressTap"
+        >
+            <view class="picker">
+                <text>{{currentAddress ? currentAddress.short_name : '选择场地'}}</text>
+            </view>
+            <!-- tooltip -->
+            <text class="full-name-tip" wx:if="{{showFullName && currentAddress}}">
+                {{currentAddress.name}}
+            </text>
+        </picker>
+
+        <!-- 搜索框在右 -->
+        <input
+                class="search-input"
+                placeholder="请输入手机号"
+                value="{{ mobile }}"
+                bindinput="onSearchInput"
+        />
+        <button
+                type="primary"
+                size="mini"
+                bindtap="resetList"
+                class="search-btn"
+                disabled="{{!currentAddress}}"
+        >
+            搜索
+        </button>
+    </view>
+
+    <scroll-view scroll-y="true" bindscrolltolower="getMemberList" style="height: 70vh;">
+        <!-- 列表展示 -->
+        <view wx:for="{{list}}" wx:key="id" class="item">
+            <image class="avatar" src="{{item.avatar}}" mode="aspectFill"></image>
+            <view class="info">
+                <view class="nickname">
+                    {{item.nickname || '未设置昵称'}}
+                    <text wx:if="{{item.nickname === '解密失败'}}" class="decrypt-fail">(解密失败)</text>
+                </view>
+                <view class="mobile">手机号：{{item.mobile}}</view>
+                <view class="details">
+                    <text>余额：¥{{item.balance}}</text>
+                    <text>赠额：¥{{item.ext_money || 0}}</text>
+                </view>
+            </view>
+            <view class="button-container">
+                <button class="edit-btn" bindtap="openEditModal" data-item="{{item}}">修改余额</button>
+                <button class="refund-btn" bindtap="openRefundModal" data-item="{{item}}" wx:if="{{item.balance > 0}}">
+                    申请退款
+                </button>
+            </view>
+        </view>
+        <view wx:if="{{loading}}" style="text-align: center; padding: 20rpx;">加载中...</view>
+        <view wx:if="{{!loading && list.length === 0}}" style="text-align: center; padding: 40rpx; color: #999;">
+            暂无会员数据
+        </view>
+    </scroll-view>
+
+    <!-- 修改余额弹窗 -->
+    <view wx:if="{{showEditModal}}" class="modal">
+        <view class="modal-mask" bindtap="closeEditModal"></view>
+        <view class="modal-content">
+            <view class="modal-header">
+                <text class="modal-title">修改用户余额</text>
+                <text class="modal-subtitle">{{currentUser.nickname}} ({{currentUser.mobile}})</text>
+            </view>
+
+            <view class="form-group">
+                <view class="form-item">
+                    <text class="form-label">当前余额</text>
+                    <text class="form-value">¥{{currentUser.currentAccount.balance}}</text>
+                </view>
+
+                <view class="form-item">
+                    <text class="form-label">新余额</text>
+                    <input
+                            type="digit"
+                            placeholder="请输入新余额"
+                            value="{{newBalance}}"
+                            bindinput="onBalanceInput"
+                            class="form-input"
+                    />
+                </view>
+
+                <view class="form-item">
+                    <text class="form-label">赠送额度</text>
+                    <input
+                            type="digit"
+                            placeholder="请输入赠送额度"
+                            value="{{extMoney}}"
+                            bindinput="onExtInput"
+                            class="form-input"
+                    />
+                </view>
+
+                <view class="form-item">
+                    <text class="form-label">操作备注</text>
+                    <textarea
+                            placeholder="请输入备注(可选)"
+                            value="{{remark}}"
+                            bindinput="onRemarkInput"
+                            class="form-textarea"
+                    ></textarea>
+                </view>
+            </view>
+
+            <view class="modal-actions">
+                <button class="modal-btn cancel" bindtap="closeEditModal">取消</button>
+                <button class="modal-btn confirm" bindtap="confirmEdit"
+                        disabled="{{!newBalance || newBalance === currentUser.balance.toString()}}">确认修改
+                </button>
+            </view>
+        </view>
+    </view>
+
+    <!-- 退款弹窗 -->
+    <view wx:if="{{showRefundModal}}" class="modal">
+        <view class="modal-mask" bindtap="closeRefundModal"></view>
+        <view class="modal-content">
+            <view class="modal-header">
+                <text class="modal-title">申请退款</text>
+                <text class="modal-subtitle">{{currentUser.nickname}} ({{currentUser.mobile}})</text>
+            </view>
+
+            <view class="form-group">
+                <view class="form-item">
+                    <text class="form-label">可退余额</text>
+                    <text class="form-value">¥{{currentUser.balance}}</text>
+                </view>
+
+                <view class="form-item">
+                    <text class="form-label">退款金额</text>
+                    <input
+                            type="digit"
+                            placeholder="请输入退款金额"
+                            value="{{refundAmount}}"
+                            bindinput="onRefundInput"
+                            class="form-input"
+                    />
+                </view>
+
+                <view class="form-item">
+                    <text class="form-label">退款原因</text>
+                    <textarea
+                            placeholder="请输入退款原因"
+                            value="{{refundReason}}"
+                            bindinput="onRefundReasonInput"
+                            class="form-textarea"
+                    ></textarea>
+                </view>
+            </view>
+
+            <view class="modal-actions">
+                <button class="modal-btn cancel" bindtap="closeRefundModal">取消</button>
+                <button class="modal-btn confirm" bindtap="confirmRefund"
+                        disabled="{{!refundAmount || parseFloat(refundAmount) <= 0 || parseFloat(refundAmount) > parseFloat(currentUser.balance)}}">
+                    确认退款
+                </button>
+            </view>
+        </view>
+    </view>
+</view>

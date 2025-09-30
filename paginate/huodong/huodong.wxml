@@ -1,0 +1,160 @@
+<navbar parameter='{{parameter}}'></navbar>
+<view class="container">
+  <!-- 分组列表 -->
+  <view class="card-list" wx:for="{{groupedArray}}" wx:key="type">
+    <view class="group-header" data-type="{{item.type}}" bindtap="toggleGroup">
+      <text>{{item.typeLabel}}</text>
+      <text class="group-icon">{{item.collapsed ? '▶' : '▼'}}</text>
+    </view>
+
+    <view class="group-content" wx:if="{{!item.collapsed}}">
+      <view class="activity-card"
+            wx:for="{{item.items}}"
+            wx:key="id"
+            data-item="{{item}}"
+            bindtap="toggleEnable">
+
+        <view class="card-header">
+          <text class="title">{{item.title}}</text>
+          <view class="status-badge {{item.enable == 0 ? 'active' : 'inactive'}}">
+            {{item.enable == 0 ? '已启用' : '已禁用'}}
+          </view>
+        </view>
+
+        <view class="card-content">
+          <view class="info-row">
+            <text class="label">
+              {{ item.type == 'DEAL_COMBO' || item.type == 'MONTH_COMBO' ? '套餐售价:' : '充值基数:' }}
+            </text>
+            <text class="value">¥{{item.money}}</text>
+          </view>
+
+          <view class="info-row">
+            <text class="label">
+              {{ item.type == 'DEAL_COMBO' || item.type == 'MONTH_COMBO' ? '次数:' : '奖励金额:' }}
+            </text>
+            <text class="value">
+              {{ item.type == 'DEAL_COMBO' || item.type == 'MONTH_COMBO' ? item.awards + '次' : '¥' + item.awards }}
+            </text>
+          </view>
+
+          <view class="info-row">
+            <text class="label">过期日期:</text>
+            <text class="value">
+              {{ (item.type == 'DEAL_COMBO' || item.type == 'MONTH_COMBO') ? '2099-12-31' : item.expiration_date }}
+            </text>
+          </view>
+
+          <view class="info-row">
+            <text class="label">用户等级:</text>
+            <text class="value">{{item.user_level}}</text>
+          </view>
+        </view>
+
+        <view class="card-actions">
+          <view class="action-btn edit" catchtap="showEditModal" data-item="{{item}}">编辑</view>
+          <view class="action-btn delete" catchtap="del" data-item="{{item}}">删除</view>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 空状态提示 -->
+  <view wx:if="{{list.length == 0 && activityTypesLoaded}}" class="empty-state">
+    <view class="iconfont icon-wushuju"></view>
+    <text class="empty-text">暂无活动信息</text>
+  </view>
+
+  <!-- 加载中状态 -->
+  <view wx:if="{{!activityTypesLoaded}}" class="loading-state">
+    <text class="loading-text">加载中...</text>
+  </view>
+
+  <!-- 添加按钮 -->
+  <view class="floating-btn" catchtap="showEditModal">
+    <text class="iconfont icon-jiahao"></text>
+  </view>
+</view>
+
+<!-- 编辑/创建弹窗 --><!-- 编辑/创建弹窗 -->
+<page-container show="{{showModal}}" bind:afterleave="closeModal">
+  <view class="modal-header">
+    <view class="modal-title">{{isEdit ? '编辑活动' : '创建活动'}}</view>
+    <view class="modal-close" catchtap="closeModal">
+      <text class="iconfont icon-quxiao"></text>
+    </view>
+  </view>
+
+  <view class="modal-content">
+    <form bindsubmit="submitForm">
+      <view class="form-row">
+        <view class="form-label">活动标题</view>
+        <view class="form-input">
+          <input name="title" value="{{formData.title}}" placeholder="请输入活动标题" />
+        </view>
+      </view>
+
+      <view class="form-row">
+        <view class="form-label">
+          {{ (formData.type == 'DEAL_COMBO' || formData.type == 'MONTH_COMBO') ? '套餐售价' : '充值基数' }}
+        </view>
+        <view class="form-input">
+          <input name="money" type="number" value="{{formData.money}}" placeholder="{{ (formData.type == 'DEAL_COMBO' || formData.type == 'MONTH_COMBO') ? '请输入套餐售价' : '请输入充值基数' }}" />
+        </view>
+      </view>
+
+      <view class="form-row">
+        <view class="form-label">
+          {{ (formData.type == 'DEAL_COMBO' || formData.type == 'MONTH_COMBO') ? '次数' : '奖励金额' }}
+        </view>
+        <view class="form-input">
+          <input name="awards" type="number" value="{{formData.awards}}" placeholder="{{ (formData.type == 'DEAL_COMBO' || formData.type == 'MONTH_COMBO') ? '请输入次数' : '请输入奖励金额' }}" />
+        </view>
+      </view>
+
+      <view class="form-row" wx:if="{{formData.type != 'DEAL_COMBO' && formData.type != 'MONTH_COMBO'}}">
+        <view class="form-label">过期日期</view>
+        <view class="form-input">
+          <picker name="expiration_date" mode="date" value="{{formData.expiration_date}}" bindchange="dateChange">
+            <view class="picker">{{formData.expiration_date || '选择过期日期'}}</view>
+          </picker>
+        </view>
+      </view>
+
+      <!-- 活动类型 -->
+      <view class="form-row">
+        <view class="form-label">活动类型</view>
+        <view class="form-input">
+          <picker range="{{activityTypes}}" range-key="value" value="{{activityTypeIndex}}" bindchange="typeChange">
+            <view class="picker">{{ typeLabel }}</view>
+          </picker>
+        </view>
+      </view>
+
+      <!-- 用户等级 -->
+      <view class="form-row">
+        <view class="form-label">用户等级</view>
+        <view class="form-input">
+          <picker range="{{userLevels}}" range-key="value" value="{{userLevelIndex}}" bindchange="levelChange">
+            <view class="picker">{{ levelLabel }}</view>
+          </picker>
+        </view>
+      </view>
+
+      <!-- 状态 -->
+      <view class="form-row">
+        <view class="form-label">是否启用</view>
+        <view class="form-input">
+          <picker range="{{statusOptions}}" range-key="value" value="{{statusIndex}}" bindchange="statusChange">
+            <view class="picker">{{ enableLabel }}</view>
+          </picker>
+        </view>
+      </view>
+
+      <view class="form-buttons">
+        <button class="btn cancel" form-type="reset" catchtap="closeModal">取消</button>
+        <button class="btn submit" form-type="submit">确认保存</button>
+      </view>
+    </form>
+  </view>
+</page-container>

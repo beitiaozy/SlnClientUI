@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "活动设置",
+  "usingComponents": {
+    "navbar": "/components/navbar/index"
+  }
+}

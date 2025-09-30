@@ -1,0 +1,3 @@
+<navbar parameter='{{parameter}}'></navbar>
+<rich-text nodes="{{datas.recharge_description}}"></rich-text>
+<!-- <rich-textnodes="{{datas.recharge_description}}"></rich-text> -->

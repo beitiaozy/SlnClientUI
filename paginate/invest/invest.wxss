@@ -1,0 +1,257 @@
+/** 样式优化 */
+.container {
+	padding: 20rpx 30rpx;
+	background: linear-gradient(#1ab8e8, #e5f3ff);
+	min-height: 100vh;
+	box-sizing: border-box;
+	padding-bottom: 200rpx;
+}
+
+.store-info {
+	background: rgba(255, 255, 255, 0.9);
+	border-radius: 16rpx;
+	padding: 30rpx;
+	margin-bottom: 30rpx;
+	box-shadow: 0 10rpx 20rpx rgba(0, 0, 0, 0.05);
+}
+
+.store-name {
+	font-size: 36rpx;
+	font-weight: bold;
+	margin-bottom: 15rpx;
+	color: #333;
+}
+
+.store-address {
+	font-size: 28rpx;
+	color: #666;
+}
+
+.section-title {
+	font-size: 32rpx;
+	font-weight: bold;
+	margin: 40rpx 0 20rpx;
+	color: #333;
+	padding-left: 15rpx;
+	border-left: 8rpx solid #1ab8e8;
+}
+
+/* 活动卡片样式 */
+.activity-cards {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-between;
+}
+
+.activity-card {
+	width: 42%;
+	background: #fff;
+	border-radius: 16rpx;
+	padding: 25rpx;
+	margin-bottom: 20rpx;
+	position: relative;
+	box-shadow: 0 6rpx 20rpx rgba(0, 0, 0, 0.08);
+	transition: all 0.3s;
+	border: 2rpx solid transparent;
+}
+
+.activity-card.active {
+	border-color: #1ab8e8;
+	background-color: #e8f7ff;
+	transform: translateY(-5rpx);
+	box-shadow: 0 10rpx 25rpx rgba(26, 184, 232, 0.2);
+}
+
+.activity-tag {
+	position: absolute;
+	top: -10rpx;
+	right: 20rpx;
+	background: #ff6b6b;
+	color: #fff;
+	font-size: 20rpx;
+	padding: 6rpx 15rpx;
+	border-radius: 20rpx;
+	font-weight: bold;
+}
+
+.activity-title {
+	font-size: 28rpx;
+	font-weight: bold;
+	margin-bottom: 15rpx;
+	color: #333;
+}
+
+.amount {
+	margin-bottom: 15rpx;
+}
+
+.money {
+	font-size: 36rpx;
+	font-weight: bold;
+	color: #1ab8e8;
+	margin-right: 15rpx;
+}
+
+.bonus {
+	font-size: 26rpx;
+	color: #ff6b6b;
+	background: #fff2f2;
+	padding: 4rpx 12rpx;
+	border-radius: 8rpx;
+}
+
+.deadline {
+	font-size: 24rpx;
+	color: #888;
+}
+
+/* 套餐优惠卡片样式 */
+.combo-cards {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-between;
+}
+
+.combo-card {
+	width: 42%;
+	background: #fff;
+	border-radius: 16rpx;
+	padding: 25rpx;
+	margin-bottom: 20rpx;
+	position: relative;
+	box-shadow: 0 6rpx 20rpx rgba(0, 0, 0, 0.08);
+	transition: all 0.3s;
+	border: 2rpx solid transparent;
+}
+
+.combo-card.active {
+	border-color: #1ab8e8;
+	background-color: #e8f7ff;
+	transform: translateY(-5rpx);
+	box-shadow: 0 10rpx 25rpx rgba(26, 184, 232, 0.2);
+}
+
+.combo-tag {
+	position: absolute;
+	top: -10rpx;
+	right: 20rpx;
+	background: #4cd964;
+	color: #fff;
+	font-size: 20rpx;
+	padding: 6rpx 15rpx;
+	border-radius: 20rpx;
+	font-weight: bold;
+}
+
+.combo-title {
+	font-size: 28rpx;
+	font-weight: bold;
+	margin-bottom: 15rpx;
+	color: #333;
+}
+
+.combo-details {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin-bottom: 15rpx;
+}
+
+.combo-price {
+	font-size: 36rpx;
+	font-weight: bold;
+	color: #1ab8e8;
+}
+
+.combo-count {
+	font-size: 26rpx;
+	color: #4cd964;
+	background: #f0fff4;
+	padding: 4rpx 12rpx;
+	border-radius: 8rpx;
+}
+
+.combo-deadline {
+	font-size: 24rpx;
+	color: #888;
+}
+
+/* 常规充值选项 */
+.regular-options {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-between;
+}
+
+.regular-option {
+	width: 28%;
+	background: #fff;
+	border-radius: 16rpx;
+	padding: 30rpx 15rpx;
+	margin-bottom: 20rpx;
+	text-align: center;
+	box-shadow: 0 6rpx 20rpx rgba(0, 0, 0, 0.08);
+	transition: all 0.3s;
+	border: 2rpx solid transparent;
+}
+
+.regular-option.active {
+	border-color: #1ab8e8;
+	background-color: #e8f7ff;
+	transform: translateY(-5rpx);
+	box-shadow: 0 10rpx 25rpx rgba(26, 184, 232, 0.2);
+}
+
+/* 充值说明 */
+.instructions {
+	background: #fff;
+	border-radius: 16rpx;
+	padding: 30rpx;
+	margin-top: 30rpx;
+	box-shadow: 0 6rpx 20rpx rgba(0, 0, 0, 0.08);
+}
+
+.instructions .content {
+	font-size: 28rpx;
+	color: #666;
+	line-height: 1.6;
+}
+
+/* 底部操作区域 */
+.bottom-action {
+	position: fixed;
+	bottom: 0;
+	left: 0;
+	width: 100%;
+	background: #fff;
+	padding: 25rpx 30rpx;
+	box-shadow: 0 -4rpx 20rpx rgba(0, 0, 0, 0.1);
+	box-sizing: border-box;
+}
+
+.agreement {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	font-size: 28rpx;
+	margin-bottom: 20rpx;
+}
+
+.agreement .link {
+	color: #1ab8e8;
+	margin-left: 5rpx;
+}
+
+.recharge-btn {
+	background: #1ab8e8;
+	color: #fff;
+	border-radius: 50rpx;
+	height: 80rpx;
+	line-height: 80rpx;
+	font-size: 32rpx;
+	width: 100%;
+}
+
+.btn-hover {
+	background: #159cc9;
+}

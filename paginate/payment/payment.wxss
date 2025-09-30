@@ -1,0 +1,261 @@
+/** @format */
+.payment-container {
+	padding: 20rpx;
+	background: #f7f7f7;
+	min-height: 100vh;
+	box-sizing: border-box;
+	padding-bottom: 160rpx;
+}
+
+/* 通用卡片样式 */
+.info-card, .coupon-card, .recharge-section, .summary-section {
+	background: #fff;
+	border-radius: 16rpx;
+	padding: 30rpx;
+	margin-bottom: 24rpx;
+	box-shadow: 0 4rpx 12rpx rgba(0, 0, 0, 0.05);
+}
+
+.section-title {
+	font-size: 32rpx;
+	font-weight: bold;
+	color: #333;
+	margin-bottom: 24rpx;
+	padding-bottom: 16rpx;
+	border-bottom: 1rpx solid #f0f0f0;
+}
+
+.info-list {
+	display: grid;
+	grid-template-columns: repeat(2, 1fr); /* 两列 */
+	grid-gap: 20rpx; /* 卡片间距 */
+}
+
+.info-item {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding: 20rpx 0;
+	border-bottom: 1rpx solid #f5f5f5;
+}
+
+.info-item:last-child {
+	border-bottom: none;
+}
+
+.price {
+	color: #e74c3c;
+	font-weight: bold;
+}
+
+/* 优惠券选择区域 */
+.coupon-selector {
+	margin-top: 16rpx;
+}
+
+.coupon-header {
+	display: flex;
+	align-items: center;
+	margin-bottom: 20rpx;
+}
+
+.coupon-header .icon {
+	font-size: 36rpx;
+	color: #ff9900;
+	margin-right: 12rpx;
+}
+
+.coupon-picker {
+	width: 100%;
+	margin-bottom: 20rpx;
+}
+
+.picker-display {
+	padding: 20rpx;
+	border: 1rpx solid #e0e0e0;
+	border-radius: 8rpx;
+	font-size: 28rpx;
+	background-color: #f9f9f9;
+}
+
+.picker-display.has-coupon {
+	border-color: #07c160;
+	background-color: #f0fff8;
+	color: #07c160;
+}
+
+.picker-display.no-coupon-selected {
+	color: #999;
+}
+
+.no-coupon {
+	padding: 30rpx;
+	text-align: center;
+	color: #999;
+	font-size: 28rpx;
+}
+
+.coupon-detail {
+	background: #f9f9f9;
+	padding: 20rpx;
+	border-radius: 8rpx;
+	margin-top: 16rpx;
+}
+
+.detail-item {
+	display: flex;
+	justify-content: space-between;
+	margin-bottom: 12rpx;
+	font-size: 26rpx;
+}
+
+.detail-item .label {
+	color: #666;
+}
+
+.detail-item .value {
+	color: #333;
+	font-weight: 500;
+}
+
+/* 充值活动区域 */
+.section-header {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin-bottom: 24rpx;
+}
+
+.section-subtitle {
+	font-size: 24rpx;
+	color: #888;
+}
+
+.activity-cards {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-between;
+}
+
+.activity-card {
+	width: 41%;
+	background: #fff;
+	border-radius: 16rpx;
+	padding: 24rpx;
+	margin-bottom: 20rpx;
+	position: relative;
+	box-shadow: 0 4rpx 12rpx rgba(0, 0, 0, 0.08);
+	transition: all 0.3s;
+	border: 2rpx solid transparent;
+}
+
+.activity-card.selected {
+	border-color: #1ab8e8;
+	background: #e8f7ff;
+	transform: translateY(-4rpx);
+	box-shadow: 0 6rpx 16rpx rgba(26, 184, 232, 0.2);
+}
+
+.activity-badge {
+	position: absolute;
+	top: -10rpx;
+	right: 15rpx;
+	background: #ff6b6b;
+	color: #fff;
+	font-size: 20rpx;
+	padding: 6rpx 12rpx;
+	border-radius: 20rpx;
+	font-weight: bold;
+}
+
+.amount {
+	margin-bottom: 15rpx;
+	text-align: center;
+}
+
+.money {
+	font-size: 36rpx;
+	font-weight: bold;
+	color: #1ab8e8;
+	margin-right: 10rpx;
+}
+
+.bonus {
+	font-size: 24rpx;
+	color: #ff6b6b;
+	background: #fff2f2;
+	padding: 4rpx 10rpx;
+	border-radius: 6rpx;
+}
+
+.validity, .deadline {
+	font-size: 22rpx;
+	color: #888;
+	text-align: center;
+	margin-top: 8rpx;
+}
+
+/* 费用汇总区域 */
+.summary-item {
+	display: flex;
+	justify-content: space-between;
+	margin-bottom: 16rpx;
+	font-size: 28rpx;
+	color: #555;
+}
+
+.summary-total {
+	display: flex;
+	justify-content: space-between;
+	margin-top: 20rpx;
+	padding-top: 20rpx;
+	border-top: 1rpx dashed #e0e0e0;
+	font-size: 32rpx;
+	font-weight: bold;
+	color: #333;
+}
+
+.total-value {
+	color: #e93323;
+}
+
+/* 按钮区域 */
+.action-buttons {
+	position: fixed;
+	bottom: 30rpx;
+	left: 20rpx;
+	right: 20rpx;
+	display: flex;
+	flex-direction: column;
+	gap: 20rpx;
+}
+
+.start-wash-btn, .recharge-btn {
+	height: 90rpx;
+	border-radius: 45rpx;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	font-size: 32rpx;
+	font-weight: 500;
+	color: #fff;
+	box-shadow: 0 4rpx 12rpx rgba(0, 0, 0, 0.15);
+}
+
+.start-wash-btn {
+	background: linear-gradient(135deg, #1745CD, #0d2e8e);
+}
+
+.recharge-btn {
+	background: linear-gradient(135deg, #1ab8e8, #158cc2);
+}
+
+.recharge-btn.disabled {
+	background: #ccc;
+	opacity: 0.7;
+}
+
+.btn-icon {
+	margin-right: 12rpx;
+	font-size: 36rpx;
+}
