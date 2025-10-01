@@ -1,89 +1,88 @@
 <navbar parameter="{{ parameter }}"></navbar>
-<view class="tab-content-item">
-    <!-- 已登录 -->
-    <view wx:if="{{isLogin}}" class="goods-detail-box">
-        <!-- 提示信息 -->
+<view class="container">
+    <block wx:if="{{isLogin}}">
         <view class="copy-tip">
             <text class="iconfont icon-tishi"></text>
             <text>點擊卡片 可複製手機號與訂單號</text>
         </view>
 
-        <view class="wrapper" wx:if="{{orderList.length > 0}}">
-            <view
-                    class="order-card" bindtap="copyOrder"
-                    wx:for="{{orderList}}"
-                    wx:key="this"
-                    data-id="{{item.order_id}}"
-                    data-item="{{item}}"
-            >
-                <!-- 订单顶部：订单号、状态、手机号、实际支付 -->
-                <view class="order-top">
-                    <view class="order-top-left">
-                        <view class="order-id">订单号：{{item.pay_code}}</view>
-                        <view class="mobile">手机号：{{item.mobile}}</view>
-                    </view>
-                    <view class="order-top-right">
-                        <view class="status">{{item.status}}</view>
-                        <view class="amount" wx:if="{{item.status == '已完成'}}">￥{{item.net_amount}}</view>
-                    </view>
-                </view>
-
-                <!-- 订单详情 -->
-                <view class="order-details">
-                    <view class="info-line">
-                        <text class="label">用户名：</text>
-                        <text>{{item.nickname}}</text>
-                    </view>
-                    <view class="info-line">
-                        <text class="label">IMEI：</text>
-                        <text>{{item.only_code}}</text>
-                    </view>
-                    <view class="info-line">
-                        <text class="label">设备名称：</text>
-                        <text>{{item.site_name}}</text>
-                    </view>
-                    <view class="info-line">
-                        <text class="label">开始时间：</text>
-                        <text>{{item.begin_time}}</text>
-                    </view>
-                    <block wx:if="{{item.status == '已完成'}}">
-                        <view class="info-line">
-                            <text class="label">支付时间：</text>
-                            <text>{{item.end_time}}</text>
-                        </view>
-
-                        <block wx:if="{{item.total_amount != item.net_amount}}">
-                            <view class="info-line">
-                                <text class="label">消费金额：</text>
-                                <text>{{item.total_amount}}</text>
+        <block wx:if="{{orderList.length > 0}}">
+            <view class="card-list">
+                <view
+                        class="card"
+                        bindtap="copyOrder"
+                        wx:for="{{orderList}}"
+                        wx:key="this"
+                        data-id="{{item.order_id}}"
+                        data-item="{{item}}"
+                >
+                    <view class="card-header">
+                        <view class="card-title">
+                            <text class="order-icon">📦</text>
+                            <view class="title-info">
+                                <text class="shop-name">{{item.site_name || '未知設備'}}</text>
+                                <text class="order-no">訂單號：{{item.pay_code || '暫無'}}</text>
                             </view>
-                            <view class="info-line">
-                                <text class="label">抵扣金额：</text>
-                                <text>{{item.discount_amount}}</text>
+                        </view>
+                        <text class="status-tag {{item._statusType}}">{{item.status}}</text>
+                    </view>
+
+                    <view class="info-section">
+                        <view class="info-row">
+                            <text class="label">用戶名</text>
+                            <text class="value">{{item.nickname}}</text>
+                        </view>
+                        <view class="info-row">
+                            <text class="label">手機號</text>
+                            <text class="value highlight">{{item.mobile}}</text>
+                        </view>
+                        <view class="info-row">
+                            <text class="label">IMEI</text>
+                            <text class="value">{{item.only_code}}</text>
+                        </view>
+                        <view class="info-row">
+                            <text class="label">開始時間</text>
+                            <text class="value">{{item.begin_time}}</text>
+                        </view>
+                        <view class="info-row" wx:if="{{item.status == '已完成'}}">
+                            <text class="label">支付時間</text>
+                            <text class="value">{{item.end_time}}</text>
+                        </view>
+                    </view>
+
+                    <view class="amount-section" wx:if="{{item.status == '已完成'}}">
+                        <view class="amount-row">
+                            <text class="label">實際支付</text>
+                            <text class="value pay">￥{{item.net_amount}}</text>
+                        </view>
+                        <block wx:if="{{item.total_amount != item.net_amount}}">
+                            <view class="amount-row">
+                                <text class="label">消費金額</text>
+                                <text class="value">￥{{item.total_amount}}</text>
+                            </view>
+                            <view class="amount-row">
+                                <text class="label">抵扣金額</text>
+                                <text class="value discount">-￥{{item.discount_amount}}</text>
                             </view>
                         </block>
-                    </block>
-                </view>
+                    </view>
 
-                <!-- 使用中状态 -->
-                <view class="order-actions" wx:if="{{item.status == '使用中'}}">
-                    <button class="cancel-btn" bindtap="cancelOrder" data-item="{{item}}">结束订单</button>
+                    <view class="order-actions" wx:if="{{item.status == '使用中'}}">
+                        <button class="cancel-btn" catchtap="cancelOrder" data-item="{{item}}">結束訂單</button>
+                    </view>
                 </view>
             </view>
-        </view>
 
-        <!-- 空数据 -->
+            <view wx:if="{{ no_more }}" class="no-more">親, 沒有更多了</view>
+        </block>
+
         <view wx:else class="empty">
-            <text class="iconfont icon-wushuju empty-icon"></text>
-            <text class="empty-text">亲，您还没有订单信息哦！</text>
+            <image src="/images/empty-record.png" class="empty-icon" />
+            <text class="empty-text">暫無訂單記錄</text>
+            <text class="empty-subtext">去下第一筆訂單吧</text>
         </view>
+    </block>
 
-        <!-- 没有更多 -->
-        <view wx:if="{{ no_more }}" class="no-more">亲, 没有更多了</view>
-    </view>
-
-    <!-- 未登录 -->
-    <view wx:else class="login-tip">
-    </view>
+    <view wx:else class="login-tip"></view>
 </view>
 <authorize bind:onLoadFun="onLoadFun"></authorize>

@@ -3,12 +3,14 @@ const app = getApp();
 
 Page({
 	data: {
-		parameter: {
-			return: '1',
-			title: '余额充值',
-			color: '#fff',
-			class: 'app_cz_title'
-		},
+                parameter: {
+                        return: '1',
+                        title: '余额充值',
+                        color: '#fff',
+                        class: 'app_cz_title',
+                        backType: '',
+                        backTo: ''
+                },
 		money: 0,
 		info: null,
 		agree: false,
@@ -21,13 +23,17 @@ Page({
 		datas: {}
 	},
 
-	onLoad: function(options) {
-		this.setData({
-			datas: wx.getStorageSync('messagedata') || {},
-			money: options.money
-		});
-		this.getList();
-	},
+        onLoad: function(options) {
+                const shouldReturnToMain = options.returnToMain !== '0';
+
+                this.setData({
+                        datas: wx.getStorageSync('messagedata') || {},
+                        money: options.money,
+                        'parameter.backType': shouldReturnToMain ? 'switchTab' : '',
+                        'parameter.backTo': shouldReturnToMain ? '/pages/main/main' : ''
+                });
+                this.getList();
+        },
 
 	onAgreeChange: function() {
 		this.setData({
