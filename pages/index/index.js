@@ -27,63 +27,77 @@ Page({
         type: '',
         order_id: null,
         address_id: null,
-        shouldSkipOnShow: false
+        shouldSkipOnShow: false, // 标记：当由充值页返回时，跳过 onShow 的自动流程
+        hasRedirectedForLowBalance: false // 首次余额不足时触发充值导航，返回后不再自动跳转
     },
-    onLoad(e) {
+    onLoad(options) {
         if (!wx.getStorageSync('lt-id')) {
             wx.switchTab({
                 url: '/pages/user/user'
             });
             return;
         }
-        const {isScan} = e;
 
-        const num = !e.num || e.num === 'undefined' ? 1 : e.num;
-        e.address_id = !e.address_id || e.address_id === 'undefined' ? 4 : e.address_id;
+        this.initFromOptions(options);
 
-        const dev_id = e.dev_id;
-        app.globalData.dev_id = e.dev_id;
+        // ✅ 如果有 recharge=true，就直接跳到充值页面
+        if (options.recharge === 'true' && options.address_id) {
+            wx.navigateTo({
+                url: `/paginate/invest/invest?money=${this.data.userInfo?.money || 0}&address_id=${options.address_id || ''}`
+            });
+            this.setData({shouldSkipOnShow: true});
+        }
+    },
+    async onShow() {
+        if (this.data.shouldSkipOnShow) {
+            // 外部流程需要手动重置 shouldSkipOnShow，避免重复触发
+            return;
+        }
 
-        let address_id = e.address_id;
+        const shouldContinue = await this.getInfo(); // 保证在获取信息后获取订单
+        if (!shouldContinue) return;
+        const noHas = await this.orderInfo();
+        if (true === noHas) {
+            // 当不存在订单时判断是否需要进行跳转操作
+            // 清除订单id
+            app.globalData.order_dev_id = undefined;
+            // 说明没有订单
+            if (this.data.isScan) {
+                this.createOrder();
+                // 将扫码状态改变
+                this.setData({
+                    isScan: false
+                });
+            }
+        }
+    },
+    /**
+     * 根据页面参数初始化业务字段
+     */
+    initFromOptions(options = {}) {
+        const {isScan} = options;
+
+        const num = !options.num || options.num === 'undefined' ? 1 : options.num;
+        const address_id = !options.address_id || options.address_id === 'undefined' ? 4 : options.address_id;
+
+        const dev_id = options.dev_id;
+        app.globalData.dev_id = dev_id;
+
         this.setData({
             isScan,
             num,
             dev_id,
             address_id
         });
-
-        // ✅ 如果有 recharge=true，就直接跳到充值页面
-        if (e.recharge === 'true' && e.address_id) {
-            wx.navigateTo({
-                url: `/paginate/invest/invest?money=${this.data.userInfo?.money || 0}&address_id=${e.address_id || ''}`
-            });
-            this.setData({ shouldSkipOnShow: true }); // 设置跳过标志
-            return;
-        }
     },
-    async onShow() {
-       if(!this.data.shouldSkipOnShow){
-           await this.getInfo(); //保证在获取信息后获取订单
-           const noHas = await this.orderInfo();
-           if (true === noHas) {
-               //当不存在订单时判断是否需要进行跳转操作
-               //清除订单id
-               app.globalData.order_dev_id = undefined;
-               //说明没有订单
-               if (this.data.isScan) {
-                   this.createOrder();
-                   //将扫码状态改变
-                   this.setData({
-                       isScan: false
-                   });
-               }
-           }
-       }
-    },
+    /**
+     * 获取门店信息、个人信息
+     */
     async getInfo() {
         try {
             let params = {};
-                params.dev_id = //获取当前订单的设备id
+            params.dev_id =
+                // 获取当前订单的设备id
                 app.globalData.order_dev_id ??
                 this.data.dev_id ??
                 app.globalData.dev_id;
@@ -101,6 +115,19 @@ Page({
                 userInfo: userAndAddressInfo,
             });
 
+            if (Number(userAndAddressInfo.money) < 3 && !this.data.hasRedirectedForLowBalance) {
+                this.setData({hasRedirectedForLowBalance: true});
+                wx.showToast({
+                    title: '余额不足，请先充值',
+                    icon: 'none'
+                });
+                const {money = 0, address_id = ''} = userAndAddressInfo;
+                wx.navigateTo({
+                    url: `/paginate/invest/invest?money=${money}&address_id=${address_id}&returnToMain=1`
+                });
+                return false;
+            }
+
         } catch (error) {
             wx.showModal({
                 title: '提示',
@@ -112,7 +139,9 @@ Page({
                     });
                 }
             });
+            return false;
         }
+        return true;
     },
     bindload(e) {
         app.bindload(e, this);
@@ -156,9 +185,13 @@ Page({
             url: `/paginate/payment/payment`
         });
     },
+    /**
+     * 统一处理入口按钮跳转
+     */
     async goPages(e) {
         let url = e.currentTarget.dataset.url;
         if (url == 'saoma') {
+            // 主动扫码
             this.setData({isScan: false})
             this.createOrder();
             return;
@@ -234,6 +267,9 @@ Page({
             url: url
         });
     },
+    /**
+     * 查询当前订单信息
+     */
     async orderInfo() {
         const res = await app.post('userSiteOrder/getCurrentOrder');
         try {
@@ -278,6 +314,9 @@ Page({
         }
         return res.data.status === '待付款';
     },
+    /**
+     * 计时费用展示刷新
+     */
     useTM() {
         let info = util.useTime(this.data.timeMoney.begin);
 

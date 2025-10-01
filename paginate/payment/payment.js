@@ -12,14 +12,16 @@ Page({
         },
         type: '自助',
         money: '0',
+        timeMoney: null,
         y_list: [],
         couponOptions: ['不使用优惠券'],
-        couponIndex: -1,
+        couponIndex: 0,
         new_people: {
             status: false
         },
         activities: [], // 当前活动
-        selectedActivity: null // 选中的活动
+        selectedActivity: null, // 选中的活动
+        showBilling: false
     },
 
     // 选择活动
@@ -32,9 +34,15 @@ Page({
 
     // 优惠券选择变化
     onCouponChange: function(e) {
-        const index = e.detail.value;
+        const index = Number(e.detail.value);
         this.setData({
             couponIndex: index,
+        });
+    },
+
+    toggleBilling() {
+        this.setData({
+            showBilling: !this.data.showBilling
         });
     },
 
@@ -125,7 +133,7 @@ Page({
         this.setData({
             y_list: res.data,
             couponOptions,
-            couponIndex: res.data.length === 0 ? '-1' : 1
+            couponIndex: res.data.length === 0 ? 0 : 1
         })
     },
 
@@ -135,7 +143,7 @@ Page({
         const {dev_id, num, y_list, couponIndex, money, address_id} = this.data;
         const callback = () => {
             const param = {dev_id, num};
-            if (y_list.length > 0 && couponIndex > '0') {
+            if (y_list.length > 0 && couponIndex > 0) {
                 param.voucher_id = y_list[couponIndex - 1].id;
             }
 

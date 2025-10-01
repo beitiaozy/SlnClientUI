@@ -130,13 +130,49 @@ Page({
 
             app.post('manageOrder/orderList', params).then(res => {
                 let base = new Base64();
-                res.data.datas.map(item => {
-                    item.nickname = base.decode(item.nickname);
-                })
+                const statusTypeMap = {
+                    '已完成': 'completed',
+                    '使用中': 'processing',
+                    '待支付': 'pending'
+                };
+
+                const formatAmount = (value, fallback = '0.00') => {
+                    if (value === null || value === undefined || value === '') {
+                        return fallback;
+                    }
+                    const num = Number(value);
+                    return Number.isFinite(num) ? num.toFixed(2) : fallback;
+                };
+
+                const formattedList = (res.data.datas || []).map(item => {
+                    const decodedNickname = base.decode(item.nickname);
+                    const netAmountRaw = item.net_amount ?? item.total_money ?? item.pay_amount;
+                    const totalAmountRaw = item.total_amount ?? item.total_money ?? netAmountRaw;
+                    const discountAmountRaw = item.discount_amount ?? (
+                        totalAmountRaw !== undefined && netAmountRaw !== undefined
+                            ? Number(totalAmountRaw) - Number(netAmountRaw)
+                            : undefined
+                    );
+
+                    const netAmount = formatAmount(netAmountRaw);
+                    const totalAmount = formatAmount(totalAmountRaw, netAmount);
+                    const discountAmount = formatAmount(discountAmountRaw, '0.00');
+
+                    return {
+                        ...item,
+                        nickname: decodedNickname,
+                        net_amount: netAmount,
+                        total_amount: totalAmount,
+                        discount_amount: discountAmount,
+                        _statusType: statusTypeMap[item.status] || 'default'
+                    };
+                });
+
                 this.setData({
-                    orderList: res.data.datas,
+                    orderList: formattedList,
                     params: {
-                        ...this.data.params, ...{
+                        ...this.data.params,
+                        ...{
                             pageNo: res.data.page_number,
                             totalPage: res.data.total_page
                         }
