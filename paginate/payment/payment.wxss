@@ -1,11 +1,13 @@
 /** @format */
-
-.container {
-        padding: 20rpx 30rpx;
+.scroll-container {
+        height: 100vh;
         background: linear-gradient(#1ab8e8, #e5f3ff);
-        min-height: 100vh;
         box-sizing: border-box;
-        padding-bottom: 240rpx;
+}
+
+.content {
+        padding: 20rpx 30rpx 240rpx;
+        box-sizing: border-box;
 }
 
 .store-info {
@@ -54,6 +56,10 @@
         padding: 30rpx;
         margin-bottom: 30rpx;
         box-shadow: 0 10rpx 24rpx rgba(0, 0, 0, 0.06);
+}
+
+.section-card:last-child {
+        margin-bottom: 0;
 }
 
 .section-title {
@@ -107,6 +113,38 @@
 
 .info-item:last-child {
         border-bottom: none;
+}
+
+.collapsible {
+        padding: 0;
+        overflow: hidden;
+}
+
+.collapse-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 30rpx;
+}
+
+.collapse-meta {
+        display: flex;
+        align-items: center;
+        gap: 12rpx;
+        font-size: 26rpx;
+        color: #1ab8e8;
+}
+
+.collapse-action {
+        font-weight: 500;
+}
+
+.collapse-icon {
+        font-size: 24rpx;
+}
+
+.collapse-content {
+        padding: 0 30rpx 30rpx;
 }
 
 .label {

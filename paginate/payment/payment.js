@@ -20,7 +20,8 @@ Page({
             status: false
         },
         activities: [], // 当前活动
-        selectedActivity: null // 选中的活动
+        selectedActivity: null, // 选中的活动
+        showBilling: false
     },
 
     // 选择活动
@@ -36,6 +37,12 @@ Page({
         const index = Number(e.detail.value);
         this.setData({
             couponIndex: index,
+        });
+    },
+
+    toggleBilling() {
+        this.setData({
+            showBilling: !this.data.showBilling
         });
     },
 
