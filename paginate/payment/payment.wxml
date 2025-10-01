@@ -84,7 +84,6 @@
                 <view class="bottom-placeholder"></view>
         </view>
 </scroll-view>
-
 <view class="bottom-action">
         <button class="primary-btn start-btn" hover-class="btn-hover" bindtap="y_pay" wx:if="{{ !(timeMoney && timeMoney.price) }}">
                 <text class="btn-icon">🚗</text>

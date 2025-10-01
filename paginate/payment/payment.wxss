@@ -1,5 +1,4 @@
 /** @format */
-
 .scroll-container {
         height: 100vh;
         background: linear-gradient(#1ab8e8, #e5f3ff);
