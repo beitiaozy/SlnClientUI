@@ -97,8 +97,10 @@ Component({
 	observers: {
 		iShidden: function (iShidden) {
 			console.info("authorize=== iShidden")
-			if (iShidden) return;
-			if (!wx.getStorageSync('lt-id') || !wx.getStorageSync('lt-token')) login.call(this);
+			// if (iShidden) return;
+			if (!iShidden || !wx.getStorageSync('lt-id') || !wx.getStorageSync('lt-token')) {
+				login.call(this)
+			}
 			const info = wx.getSystemInfoSync();
 
 			if (-1 === compareVersion(info.SDKVersion, '2.21.2')) {

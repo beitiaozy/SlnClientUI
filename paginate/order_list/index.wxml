@@ -24,7 +24,7 @@
                     </view>
                     <view class="order-top-right">
                         <view class="status">{{item.status}}</view>
-                        <view class="amount" wx:if="{{item.status == '已完成'}}">￥{{item.total_money}}</view>
+                        <view class="amount" wx:if="{{item.status == '已完成'}}">￥{{item.net_amount}}</view>
                     </view>
                 </view>
 
@@ -51,14 +51,17 @@
                             <text class="label">支付时间：</text>
                             <text>{{item.end_time}}</text>
                         </view>
-                        <view class="info-line">
-                            <text class="label">清水总价：</text>
-                            <text class="highlight">￥{{item.sl_total_money}}</text>
-                        </view>
-                        <view class="info-line">
-                            <text class="label">泡沫总价：</text>
-                            <text class="highlight">￥{{item.pm_total_money}}</text>
-                        </view>
+
+                        <block wx:if="{{item.total_amount != item.net_amount}}">
+                            <view class="info-line">
+                                <text class="label">消费金额：</text>
+                                <text>{{item.total_amount}}</text>
+                            </view>
+                            <view class="info-line">
+                                <text class="label">抵扣金额：</text>
+                                <text>{{item.discount_amount}}</text>
+                            </view>
+                        </block>
                     </block>
                 </view>
 
