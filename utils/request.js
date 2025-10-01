@@ -52,7 +52,8 @@ export default function request(api, method, data = {},) {
                 if (res.data.code == "000") {
                     reslove(res.data, res);
                 } else if (res.data.code == "999") {
-                    if (res.data.data == '需要登陆' || res.data.data == '需要登录！') {
+                    const message = res && res.data ? res.data.data : undefined;
+                    if (typeof message === 'string' && (message.includes('需要登录') || message === '需要登陆')) {
                         if (!wx.getStorageSync('toLogin')) {
                             wx.removeStorageSync('lt-id')
                             wx.removeStorageSync('lt-token')
@@ -69,13 +70,13 @@ export default function request(api, method, data = {},) {
                         wx.setStorageSync('toLogin', true);
                         promptReLogin();
                     }
-                    if (res.data.data == '代理商需要登录！' || res.data.data == '账号异常！') {
+                    if (message == '代理商需要登录！' || message == '账号异常！') {
                         wx.removeStorageSync('agent-id')
                         wx.removeStorageSync('agent-token')
                         wx.removeStorageSync('agent_info')
                         wx.showModal({
                             title: '提示',
-                            content: res.data.data,
+                            content: message,
                             showCancel: false,
                             success: res2 => {
                                 if (res2.confirm) {
@@ -92,13 +93,13 @@ export default function request(api, method, data = {},) {
                         //   url: '/paginate/shezhi/login?identity=代理',
                         // })
                     }
-                    if (res.data.data == '商家需要登录！') {
+                    if (message == '商家需要登录！') {
                         wx.removeStorageSync('shoper-id')
                         wx.removeStorageSync('shoper-token')
                         wx.removeStorageSync('shoper_info')
                         wx.showModal({
                             title: '提示',
-                            content: res.data.data,
+                            content: message,
                             showCancel: false,
                             success: res2 => {
                                 if (res2.confirm) {
