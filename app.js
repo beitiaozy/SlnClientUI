@@ -33,11 +33,12 @@ function login(app) {
 								wx.setStorageSync("isLogin", true);
 								//取消登录提示
 								wx.hideLoading();
-								wx.setStorageSync("userInfo", userInfo);
-								wx.setStorageSync("open_id", res2.data);
-								wx.setStorageSync("lt-id", res2.data.user_id);
-								wx.setStorageSync("lt-token", res2.data.token);
-								wx.setStorageSync("address_id", app.globalData.dev_id);
+                                                                wx.setStorageSync("userInfo", userInfo);
+                                                                wx.setStorageSync("open_id", res2.data);
+                                                                wx.setStorageSync("lt-id", res2.data.user_id);
+                                                                wx.setStorageSync("lt-token", res2.data.token);
+                                                                wx.setStorageSync("address_id", app.globalData.dev_id);
+                                                                wx.removeStorageSync('toLogin');
 							}
 						} catch (err) {}
 					} else {

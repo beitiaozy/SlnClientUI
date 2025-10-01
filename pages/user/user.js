@@ -43,15 +43,19 @@ Page({
 	},
 	onShow: function () {
 		// 判断有没有授权登录
-		if (wx.getStorageSync('isLogin') && wx.getStorageSync('lt-token')) {
-			// this.getMobileNumber()
-			this.getUserInfo();
-			this.setData({
-				userInfo: wx.getStorageSync('userInfo')
-			});
-		} else {
-			this.setData({ userInfo: {} });
-		}
+                if (wx.getStorageSync('isLogin') && wx.getStorageSync('lt-token')) {
+                        // this.getMobileNumber()
+                        this.getUserInfo();
+                        this.setData({
+                                userInfo: wx.getStorageSync('userInfo'),
+                                iShidden: true
+                        });
+                } else {
+                        this.setData({
+                                userInfo: {},
+                                iShidden: false
+                        });
+                }
 	},
 	close: function () {
 		this.setData({ switchActive: false });

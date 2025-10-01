@@ -146,6 +146,11 @@ Page({
      * 生命周期函数--监听页面显示
      */
     onShow() {
+        if (!wx.getStorageSync('lt-id') || !wx.getStorageSync('lt-token')) {
+            this.setData({ iShidden: false, showFloatingBall: false, currentOrder: null });
+            return;
+        }
+        this.setData({ iShidden: true });
         this.checkOrderStatus();
     },
 
