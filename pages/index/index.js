@@ -27,7 +27,8 @@ Page({
         type: '',
         order_id: null,
         address_id: null,
-        shouldSkipOnShow: false // 标记：当由充值页返回时，跳过 onShow 的自动流程
+        shouldSkipOnShow: false, // 标记：当由充值页返回时，跳过 onShow 的自动流程
+        hasRedirectedForLowBalance: false // 首次余额不足时触发充值导航，返回后不再自动跳转
     },
     onLoad(options) {
         if (!wx.getStorageSync('lt-id')) {
@@ -114,7 +115,12 @@ Page({
                 userInfo: userAndAddressInfo,
             });
 
-            if (Number(userAndAddressInfo.money) < 3) {
+            if (Number(userAndAddressInfo.money) < 3 && !this.data.hasRedirectedForLowBalance) {
+                this.setData({hasRedirectedForLowBalance: true});
+                wx.showToast({
+                    title: '余额不足，请先充值',
+                    icon: 'none'
+                });
                 wx.navigateTo({
                     url: `/paginate/invest/invest?money=${userAndAddressInfo.money || 0}&address_id=${userAndAddressInfo.address_id || ''}`
                 });
