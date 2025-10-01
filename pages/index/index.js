@@ -124,6 +124,7 @@ Page({
                 const {money = 0, address_id = ''} = userAndAddressInfo;
                 wx.navigateTo({
                     url: `/paginate/invest/invest?money=${money}&address_id=${address_id}&returnToMain=1`
+
                 });
                 return false;
             }
