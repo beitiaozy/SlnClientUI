@@ -1,99 +1,87 @@
 <navbar parameter="{{ parameter }}" />
-<view class="payment-container">
-	<!-- 订单信息区域 -->
-	<view class="order-info">
-		<view class="info-card">
-			<view class="section-title">计费标准</view>
-			<!-- 动态渲染计费项目 -->
-			<view class="info-list">
-			<block wx:for="{{ free_map }}"  wx:key="index">
-				<view class="info-item">
-					<text>{{item.rule_name}}</text>
-					<text class="price">{{ item.unit_price }}元/秒</text>
-				</view>
-			</block>
-			</view>
-		</view>
+<view class="container">
+        <view class="store-info">
+                <view class="store-name">{{ addr_name ? addr_name : '洗涞乐自助洗车' }}</view>
+                <view class="store-address">{{ address ? address : (area ? area : '欢迎使用智能洗车服务') }}</view>
+                <view class="store-meta">
+                        <text class="meta-item">设备编号：{{ dev_id ? dev_id : '--' }}</text>
+                        <text class="meta-item balance">账户余额：￥{{ money ? money : '0.00' }}</text>
+                </view>
+        </view>
 
-		<!-- 优惠券选择区域 -->
-		<view class="coupon-card">
-			<view class="section-title">优惠券选择</view>
-			<view class="coupon-selector">
-				<view class="coupon-header" wx:if="{{ y_list.length !== 0 }}">
-					<text class="iconfont icon-youhuiquan icon"></text>
-					<text>可用优惠券</text>
-				</view>
-				<block wx:if="{{ y_list.length === 0 }}">
-					<view class="no-coupon">暂无可用优惠券</view>
-				</block>
-				<block wx:else>
-					<picker class="coupon-picker" range="{{couponOptions}}" value="{{couponIndex}}" bindchange="onCouponChange">
-						<view class="picker-display {{couponIndex > 0 ? 'has-coupon' : 'no-coupon-selected'}}">
-							{{couponOptions[couponIndex]}}
-						</view>
-					</picker>
+        <view class="section-card">
+                <view class="section-title">计费标准</view>
+                <view class="info-list">
+                        <block wx:for="{{ free_map }}" wx:key="index">
+                                <view class="info-item">
+                                        <text class="label">{{item.rule_name}}</text>
+                                        <text class="price">{{ item.unit_price }}元/秒</text>
+                                </view>
+                        </block>
+                </view>
+        </view>
 
-					<view class="coupon-detail" wx:if="{{couponIndex > 0}}">
-						<view class="detail-item">
-							<text class="label">优惠金额：</text>
-							<text class="value">{{y_list[couponIndex-1].total_money}}元</text>
-						</view>
-						<view class="detail-item">
-							<text class="label">券类型：</text>
-							<text class="value">{{y_list[couponIndex-1].type_name}}</text>
-						</view>
-					</view>
-				</block>
-			</view>
-		</view>
-	</view>
+        <view class="section-card">
+                <view class="section-title">优惠券选择</view>
+                <view class="coupon-selector">
+                        <view class="coupon-header" wx:if="{{ y_list.length !== 0 }}">
+                                <text class="iconfont icon-youhuiquan icon"></text>
+                                <text>可用优惠券</text>
+                        </view>
+                        <block wx:if="{{ y_list.length === 0 }}">
+                                <view class="no-coupon">暂无可用优惠券</view>
+                        </block>
+                        <block wx:else>
+                                <picker class="coupon-picker" range="{{couponOptions}}" value="{{couponIndex}}" bindchange="onCouponChange">
+                                        <view class="picker-display {{couponIndex > 0 ? 'has-coupon' : 'no-coupon-selected'}}">
+                                                {{couponOptions[couponIndex] ? couponOptions[couponIndex] : '请选择优惠券'}}
+                                        </view>
+                                </picker>
 
-	<!-- 充值活动区域 -->
-	<view class="recharge-section" wx:if="{{activities.length > 0}}">
-		<view class="section-header">
-			<text class="section-title">优惠充值活动</text>
-			<text class="section-subtitle">充值享额外优惠</text>
-		</view>
+                                <view class="coupon-detail" wx:if="{{couponIndex > 0}}">
+                                        <view class="detail-item">
+                                                <text class="detail-label">优惠金额：</text>
+                                                <text class="detail-value">{{y_list[couponIndex-1].total_money}}元</text>
+                                        </view>
+                                        <view class="detail-item">
+                                                <text class="detail-label">券类型：</text>
+                                                <text class="detail-value">{{y_list[couponIndex-1].type_name}}</text>
+                                        </view>
+                                </view>
+                        </block>
+                </view>
+        </view>
 
-		<view class="activity-cards">
-			<view wx:for="{{activities}}" wx:key="id" class="activity-card {{selectedActivity && selectedActivity.index === index ? 'selected' : ''}}"
-				  bindtap="selectActivity" data-index="{{index}}" data-id="{{item.id}}">
-				<view class="activity-badge">{{item.title}}</view>
-				<view class="activity-content">
-					<view class="amount">
-						<text class="money">{{item.money}}元</text>
-						<view wx:if="{{item.type === 'DEAL_COMBO'}}">
-							<text class="bonus" wx:if="{{item.awards != 0}}">送{{item.awards}}次洗车</text>
-						</view>
-						<view wx:if="{{item.type === 'MONTH_COMBO'}}">
-							<text class="bonus" wx:if="{{item.awards != 0}}">送30天随心洗</text>
-						</view>
-						<view wx:if="{{item.type === 'HOLIDAY' || item.type === 'NEWCOMER'}}">
-							<text class="bonus" wx:if="{{item.awards != 0}}">送{{item.awards}}元</text>
-						</view>
-					</view>
-					<view class="validity" wx:if="{{item.remaining_days}}">
-						有效期剩余: {{item.remaining_days}}天
-					</view>
-					<view class="deadline" wx:if="{{item.expiration_date}}">
-						截止: {{item.expiration_date}}
-					</view>
-				</view>
-			</view>
-		</view>
-	</view>
+        <view class="section-card" wx:if="{{activities.length > 0}}">
+                <view class="section-header">
+                        <view class="section-title">优惠充值活动</view>
+                        <view class="section-subtitle">充值享额外优惠</view>
+                </view>
+                <view class="activity-cards">
+                        <view wx:for="{{activities}}" wx:key="id" class="activity-card {{selectedActivity && selectedActivity.index === index ? 'active' : ''}}"
+                              bindtap="selectActivity" data-index="{{index}}" data-id="{{item.id}}">
+                                <view class="activity-tag" wx:if="{{item.type === 'NEWCOMER'}}">新人专享</view>
+                                <view class="activity-title">{{item.title}}</view>
+                                <view class="amount">
+                                        <text class="money">{{item.money}}元</text>
+                                        <text class="bonus" wx:if="{{item.awards}}">{{item.type === 'DEAL_COMBO' ? '送' + item.awards + '次洗车' : item.type === 'MONTH_COMBO' ? '送' + item.awards + '天' : '送' + item.awards + '元'}}</text>
+                                </view>
+                                <view class="deadline" wx:if="{{item.expiration_date}}">截止日期：{{item.expiration_date}}</view>
+                                <view class="deadline" wx:elif="{{item.remaining_days}}">剩余{{item.remaining_days}}天</view>
+                        </view>
+                </view>
+        </view>
 
-	<!-- 启动洗车按钮 -->
-	<view class="action-buttons">
-		<view class="start-wash-btn" bindtap="y_pay" wx:if="{{ !timeMoney.price }}">
-			<text class="btn-icon">🚗</text>
-			<text>启动洗车</text>
-		</view>
+        <view class="bottom-placeholder"></view>
+</view>
 
-		<view class="recharge-btn {{selectedActivity ? '' : 'disabled'}}"
-			  bindtap="submitRecharge" wx:if="{{selectedActivity}}">
-			<text class="btn-icon">💰</text>
-			<text>立即充值</text>
-		</view>
-	</view>
+<view class="bottom-action">
+        <button class="primary-btn start-btn" hover-class="btn-hover" bindtap="y_pay" wx:if="{{ !(timeMoney && timeMoney.price) }}">
+                <text class="btn-icon">🚗</text>
+                <text>启动洗车</text>
+        </button>
+        <button class="secondary-btn recharge-btn" hover-class="btn-hover" bindtap="submitRecharge" disabled="{{ !selectedActivity }}">
+                <text class="btn-icon">💰</text>
+                <text>{{ selectedActivity ? '立即充值' : '选择优惠后充值' }}</text>
+        </button>
 </view>

@@ -25,9 +25,29 @@ Component({
 			navH: app.globalData.navHeight
 		});
 	},
-	methods: {
-		return: function () {
-			wx.navigateBack();
-		}
-	}
+        methods: {
+                return: function () {
+                        const parameter = this.data.parameter || {};
+                        const {backTo, backType} = parameter;
+
+                        if (backTo) {
+                                const type = backType || 'navigateTo';
+
+                                if (type === 'switchTab') {
+                                        wx.switchTab({url: backTo});
+                                } else if (type === 'redirect') {
+                                        wx.redirectTo({url: backTo});
+                                } else if (type === 'reLaunch') {
+                                        wx.reLaunch({url: backTo});
+                                } else if (type === 'navigateTo') {
+                                        wx.navigateTo({url: backTo});
+                                } else {
+                                        wx.navigateBack();
+                                }
+                                return;
+                        }
+
+                        wx.navigateBack();
+                }
+        }
 });

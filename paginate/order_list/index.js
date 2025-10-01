@@ -73,11 +73,23 @@ Page({
     orderList() {
         app.post('userSiteOrder/orderList', this.data.params).then(res => {
             let base = new Base64();
-            res.data.datas.map(item => {
-                item.nickname = base.decode(item.nickname);
-            })
+            const statusTypeMap = {
+                '已完成': 'completed',
+                '使用中': 'processing',
+                '待支付': 'pending'
+            };
+
+            const formattedList = res.data.datas.map(item => {
+                const decodedNickname = base.decode(item.nickname);
+                return {
+                    ...item,
+                    nickname: decodedNickname,
+                    _statusType: statusTypeMap[item.status] || 'default'
+                };
+            });
+
             this.setData({
-                orderList: [...this.data.orderList, ...res.data.datas],
+                orderList: [...this.data.orderList, ...formattedList],
                 params: {
                     ...this.data.params, ...{
                         totalPage: res.data.total_page
