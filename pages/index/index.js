@@ -38,6 +38,12 @@ Page({
             return;
         }
 
+        this.orderStatusCheckTimer = null;
+        this.isCheckingOrderStatus = false;
+        this.hasShownOrderEndModal = false;
+        this.activeOrderId = null;
+        this.activeOrderCode = null;
+
         this.initFromOptions(options);
 
         // ✅ 如果有 recharge=true，就直接跳到充值页面
@@ -49,6 +55,7 @@ Page({
         }
     },
     async onShow() {
+        this.hasShownOrderEndModal = false;
         if (this.data.shouldSkipOnShow) {
             // 外部流程需要手动重置 shouldSkipOnShow，避免重复触发
             return;
@@ -273,16 +280,21 @@ Page({
     async orderInfo() {
         const res = await app.post('userSiteOrder/getCurrentOrder');
         try {
-            if (!res.data || Object.keys(res.data).length === 0) return true;
+            if (!res.data || typeof res.data !== 'object' || Object.keys(res.data).length === 0) {
+                this.ensureOrderStatusWatcher();
+                return true;
+            }
             if (res.data.status === '待付款') {
                 this.setData({
                     state: '待使用'
                 });
+                this.ensureOrderStatusWatcher(res.data.status, res.data);
                 return true;
             } else
                 this.setData({
                     state: res.data.status
                 });
+            this.ensureOrderStatusWatcher(res.data.status, res.data);
 
             let begin = new Date(res.data.begin_time.replace(/-/g, '/')).getTime();
 
@@ -336,6 +348,7 @@ Page({
      */
     onHide: function () {
         clearInterval(this.timer);
+        this.stopOrderStatusWatcher();
     },
 
     /**
@@ -345,6 +358,89 @@ Page({
         clearInterval(this.timer);
         app.globalData.num = null;
         app.globalData.dev_id = null;
+        this.stopOrderStatusWatcher();
+    },
+    ensureOrderStatusWatcher(status, orderData = {}) {
+        if (status === '使用中') {
+            this.activeOrderId = orderData.id ?? null;
+            this.activeOrderCode = orderData.only_code ?? null;
+            this.startOrderStatusWatcher();
+        } else {
+            this.activeOrderId = null;
+            this.activeOrderCode = null;
+            this.stopOrderStatusWatcher();
+        }
+    },
+    startOrderStatusWatcher() {
+        if (this.hasShownOrderEndModal) return;
+        if (this.orderStatusCheckTimer) return;
+        this.orderStatusCheckTimer = setTimeout(() => {
+            this.pollOrderStatusOnce();
+        }, 3000);
+    },
+    stopOrderStatusWatcher() {
+        if (this.orderStatusCheckTimer) {
+            clearTimeout(this.orderStatusCheckTimer);
+            this.orderStatusCheckTimer = null;
+        }
+        this.isCheckingOrderStatus = false;
+    },
+    async pollOrderStatusOnce() {
+        this.orderStatusCheckTimer = null;
+        if (this.hasShownOrderEndModal) return;
+        if (this.data.state !== '使用中') return;
+        if (this.isCheckingOrderStatus) return;
+        this.isCheckingOrderStatus = true;
+        try {
+            const res = await app.post('userSiteOrder/getCurrentOrder');
+            const data = res?.data;
+            const hasOrderObject = data && typeof data === 'object' && Object.keys(data).length > 0;
+            if (!hasOrderObject) {
+                this.handleExternalOrderEnd();
+                return;
+            }
+            const latestStatus = data.status;
+            const sameOrder = !this.activeOrderId || !data.id || data.id === this.activeOrderId;
+            if (latestStatus !== '使用中' || !sameOrder) {
+                this.handleExternalOrderEnd(latestStatus);
+                return;
+            }
+            this.orderStatusCheckTimer = setTimeout(() => {
+                this.pollOrderStatusOnce();
+            }, 3000);
+        } catch (error) {
+            this.orderStatusCheckTimer = setTimeout(() => {
+                this.pollOrderStatusOnce();
+            }, 5000);
+        } finally {
+            this.isCheckingOrderStatus = false;
+        }
+    },
+    handleExternalOrderEnd(latestStatus = '已结束') {
+        if (this.hasShownOrderEndModal) return;
+        this.hasShownOrderEndModal = true;
+        this.stopOrderStatusWatcher();
+        clearInterval(this.timer);
+        this.setData({
+            state: latestStatus || '已结束',
+            timeMoney: null,
+            order_id: null
+        });
+        this.activeOrderId = null;
+        this.activeOrderCode = null;
+        app.globalData.order_dev_id = undefined;
+        app.globalData.dev_id = null;
+        app.globalData.num = null;
+        wx.showModal({
+            title: '提示',
+            content: '订单已结束',
+            showCancel: false,
+            success: () => {
+                wx.navigateTo({
+                    url: '/paginate/order_list/index'
+                });
+            }
+        });
     },
     /**
      * 用户点击分享
